@@ -1,0 +1,21 @@
+{
+  "name": "council",
+  "version": "1.0.0",
+  "description": "Consult a virtual advisory board of domain experts. Richard Feynman is always present to ask first-principles questions.",
+  "author": {
+    "name": "otrofimo"
+  },
+  "repository": "https://github.com/otrofimo/claude-skills",
+  "license": "MIT",
+  "keywords": [
+    "council",
+    "experts",
+    "advisory",
+    "design",
+    "engineering",
+    "business",
+    "security",
+    "refactoring",
+    "feynman"
+  ]
+}
