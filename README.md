@@ -7,11 +7,21 @@ A virtual advisory board of domain experts. Each council is domain-specific, and
 ### Via Plugin Marketplace
 
 ```bash
-# Step 1: Add the marketplace
+# Add the marketplace
 /plugin marketplace add otrofimo/claude-skills
 
-# Step 2: Install the plugin
+# Install the plugin
 /plugin install council@claude-skills
+```
+
+### Uninstalling
+
+```bash
+# Remove the plugin
+/plugin uninstall council@claude-skills
+
+# Remove the marketplace (optional)
+/plugin marketplace remove otrofimo/claude-skills
 ```
 
 ### Manual Installation
