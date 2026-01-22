@@ -1,0 +1,15 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/anthropics/claude-code@main/plugins/marketplace.schema.json",
+  "name": "council-marketplace",
+  "description": "Virtual advisory board of domain experts with Richard Feynman",
+  "plugins": [
+    {
+      "name": "council",
+      "description": "Consult a virtual advisory board of domain experts. Richard Feynman is always present to ask first-principles questions.",
+      "source": {
+        "source": "local",
+        "path": "."
+      }
+    }
+  ]
+}
