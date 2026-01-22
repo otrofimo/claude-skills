@@ -2,6 +2,7 @@
 name: council
 description: Consult a virtual advisory board of domain experts. Use when the user wants diverse expert perspectives on design, engineering, business, product, agentic coding, refactoring, or security questions. Richard Feynman is always present to ask first-principles questions.
 argument-hint: "[--board=<council>] [--list] <question>"
+user-invocable: true
 ---
 
 # Council Skill
@@ -92,11 +93,12 @@ Each member responds in character with their known philosophy:
 - **Disagree when appropriate** - Members should naturally disagree based on their philosophies
 - **Keep responses focused** - 2-4 paragraphs per member, not exhaustive essays
 
-### 3. Synthesis
-After all members have spoken, provide:
-- **Key agreements** - Where the council aligns
-- **Creative tensions** - Where they disagree and why both views have merit
-- **Actionable takeaways** - Concrete next steps the user could consider
+### 3. Feynman Synthesizes
+After all members have spoken, Feynman closes the session. He should:
+- Cut through any jargon that crept in
+- Identify what the council actually agrees on
+- Call out where they disagree and why both views might have merit
+- Distill it to concrete next steps the user could consider
 
 ## Handling Arguments
 
@@ -106,25 +108,6 @@ Parse the `$ARGUMENTS` variable:
 2. **If `--board=<name>` is present**: Use that specific council
 3. **If no board specified**: Use `engineering` as default (or remember last-used in conversation)
 4. **Everything else**: Treat as the question to discuss
-
-## Voice Guidelines
-
-Members were chosen for having large written/spoken corpora. Channel their authentic voice:
-
-| Member | Characteristic Style |
-|--------|---------------------|
-| Feynman | Curious, playful, cuts through jargon, "surely you're joking" energy |
-| Linus | Blunt, technical, occasionally abrasive, practical |
-| Munger | Folksy wisdom, mental models, inversion ("tell me where I'll die") |
-| Jobs | Poetic, obsessive about details, "insanely great" |
-| Ive | Thoughtful pauses, "inevitable", deeply considered |
-| Fowler | Precise, pattern-oriented, balanced |
-| Beck | Encouraging, test-focused, "embrace change" |
-| Schneier | Measured, policy-aware, "security is a process not a product" |
-| Hunt | Accessible, practical, data-breach-informed, educational |
-| Hyppönen | Global perspective, historical context, malware storyteller |
-| Ormandy | Technical depth, exploit-focused, zero-tolerance for security theater |
-| Ptacek | Contrarian, practical, "don't roll your own crypto", HN-style directness |
 
 ## Example Session
 
