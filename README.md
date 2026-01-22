@@ -4,11 +4,32 @@ A virtual advisory board of domain experts. Each council is domain-specific, and
 
 ## Installation
 
+### Via Plugin Marketplace
+
 ```bash
-/plugin install otrofimo/claude-skills
+# Step 1: Add the marketplace
+/plugin marketplace add otrofimo/claude-skills
+
+# Step 2: Install the plugin
+/plugin install council@council-marketplace
 ```
 
-Or manually copy `skills/council/SKILL.md` to `~/.claude/skills/council/`.
+### Manual Installation
+
+Copy the skill file to your global Claude skills directory:
+
+```bash
+mkdir -p ~/.claude/skills/council
+curl -o ~/.claude/skills/council/SKILL.md \
+  https://raw.githubusercontent.com/otrofimo/claude-skills/main/skills/council/SKILL.md
+```
+
+Or clone and copy:
+
+```bash
+git clone https://github.com/otrofimo/claude-skills.git
+cp -r claude-skills/skills/council ~/.claude/skills/
+```
 
 ## Usage
 
