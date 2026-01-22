@@ -9,7 +9,7 @@
     {
       "name": "council",
       "description": "Consult a virtual advisory board of domain experts. Richard Feynman is always present to ask first-principles questions.",
-      "source": "./skills/council"
+      "source": "./plugins/council"
     }
   ]
 }
