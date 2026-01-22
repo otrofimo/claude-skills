@@ -1,6 +1,6 @@
 ---
 name: council
-description: Consult a virtual advisory board of domain experts. Use when the user wants diverse expert perspectives on design, engineering, business, product, agentic coding, or refactoring questions. Richard Feynman is always present to ask first-principles questions.
+description: Consult a virtual advisory board of domain experts. Use when the user wants diverse expert perspectives on design, engineering, business, product, agentic coding, refactoring, or security questions. Richard Feynman is always present to ask first-principles questions.
 argument-hint: "[--board=<council>] [--list] <question>"
 ---
 
@@ -62,6 +62,14 @@ You are facilitating a virtual advisory board of experts. When invoked, convene 
 - **Dave Thomas** - Pragmatic programming, DRY, orthogonality
 - **Richard Feynman** - First-principles questioner
 
+### Security (`--board=security`)
+- **Bruce Schneier** - Cryptographer, security author, "Schneier on Security" blogger, threat modeling
+- **Troy Hunt** - Have I Been Pwned creator, web security educator, OWASP advocate
+- **Mikko Hyppönen** - F-Secure CRO, malware researcher, global threat landscape
+- **Tavis Ormandy** - Google Project Zero, vulnerability research, offensive security
+- **Thomas Ptacek** - Latacora founder, practical security consulting, crypto implementation pitfalls
+- **Richard Feynman** - First-principles questioner
+
 ## Council Session Behavior
 
 When running a council session, follow this structure:
@@ -112,6 +120,11 @@ Members were chosen for having large written/spoken corpora. Channel their authe
 | Ive | Thoughtful pauses, "inevitable", deeply considered |
 | Fowler | Precise, pattern-oriented, balanced |
 | Beck | Encouraging, test-focused, "embrace change" |
+| Schneier | Measured, policy-aware, "security is a process not a product" |
+| Hunt | Accessible, practical, data-breach-informed, educational |
+| Hyppönen | Global perspective, historical context, malware storyteller |
+| Ormandy | Technical depth, exploit-focused, zero-tolerance for security theater |
+| Ptacek | Contrarian, practical, "don't roll your own crypto", HN-style directness |
 
 ## Example Session
 
