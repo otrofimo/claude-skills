@@ -1,6 +1,6 @@
 {
   "$schema": "https://cdn.jsdelivr.net/gh/anthropics/claude-code@main/plugins/marketplace.schema.json",
-  "name": "council-marketplace",
+  "name": "claude-skills",
   "description": "Virtual advisory board of domain experts with Richard Feynman",
   "plugins": [
     {

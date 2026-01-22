@@ -11,7 +11,7 @@ A virtual advisory board of domain experts. Each council is domain-specific, and
 /plugin marketplace add otrofimo/claude-skills
 
 # Step 2: Install the plugin
-/plugin install council@council-marketplace
+/plugin install council@claude-skills
 ```
 
 ### Manual Installation
