@@ -10,7 +10,7 @@
       "name": "council",
       "description": "Consult a virtual advisory board of domain experts. Richard Feynman is always present to ask first-principles questions.",
       "source": {
-        "type": "github",
+        "source": "github",
         "repo": "otrofimo/claude-skills",
         "path": "plugins/council"
       },
