@@ -2,6 +2,7 @@
 name: council
 description: Consult a virtual advisory board of domain experts. Use when the user wants diverse expert perspectives on design, engineering, business, product, agentic coding, refactoring, or security questions. Richard Feynman is always present to ask first-principles questions.
 argument-hint: "[--board=<council>] [--list] <question>"
+user-invocable: true
 ---
 
 # Council Skill
