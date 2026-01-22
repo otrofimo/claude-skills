@@ -1,5 +1,5 @@
 {
-  "name": "council",
+  "name": "claude-skills",
   "version": "1.0.0",
   "description": "Consult a virtual advisory board of domain experts. Richard Feynman is always present to ask first-principles questions.",
   "author": {
@@ -7,6 +7,7 @@
   },
   "repository": "https://github.com/otrofimo/claude-skills",
   "license": "MIT",
+  "skills": "./skills/",
   "keywords": [
     "council",
     "experts",
