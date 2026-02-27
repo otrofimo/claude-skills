@@ -173,7 +173,7 @@ rm -f "${TMPDIR:-/tmp}/claude-archive-notified-${SESSION_ID}"
 This resets the auto-archive trigger so it can fire again if the user
 continues working in the same session.
 
-### Step 9: Confirm Completion
+### Step 9: Confirm and Clear
 
 After writing all files, output a summary:
 
@@ -183,12 +183,18 @@ Archive complete:
   Files: INDEX.md, session.md
   Catalog: Updated CATALOG.md (<N> total sessions)
 
-Session preserved. You can continue working — context is still available.
+Starting fresh session. To recover context from this archive, grep the archives directory.
 ```
+
+Then immediately run `/clear` to reset the session. The entire point of
+archiving is to preserve work so the context can be safely cleared before
+quality degrades. The new session starts clean — future sessions can discover
+this archive by grepping INDEX.md keyword files in the archives directory.
 
 ## Important Notes
 
-- **Do not clear the session** after archiving. The user may want to continue.
+- **Always clear after archiving** — archive exists so you can confidently
+  start fresh. Archiving without clearing defeats the purpose.
 - **Be thorough with keywords** — these are the primary discovery mechanism
   for future LLM sessions using grep.
 - **Keep INDEX.md concise** — it's a "pin file" for rapid scanning, not a

@@ -50,7 +50,7 @@ case "$SUBCOMMAND" in
       touch "$NOTIFIED_FILE"
       rm -f "$FLAG_FILE"
       # stdout becomes context for Claude (UserPromptSubmit behavior)
-      echo "[AUTO-ARCHIVE] Context window usage has exceeded 60%. Run /archive now to save this session before context quality degrades. After archiving, you may want to run /compact."
+      echo "[AUTO-ARCHIVE] Context window usage has exceeded 60%. Run /archive now to save this session and start fresh before context quality degrades."
     fi
     ;;
   *)
