@@ -175,21 +175,15 @@ continues working in the same session.
 
 ### Step 9: Confirm and Clear
 
-After writing all files, output a summary:
+After writing all files, output:
 
 ```
-Archive complete:
-  Location: <archive_directory_path>
-  Files: INDEX.md, session.md
-  Catalog: Updated CATALOG.md (<N> total sessions)
-
-Starting fresh session. To recover context from this archive, grep the archives directory.
+Session saved to <archive_directory_path>
 ```
 
-Then immediately run `/clear` to reset the session. The entire point of
-archiving is to preserve work so the context can be safely cleared before
-quality degrades. The new session starts clean — future sessions can discover
-this archive by grepping INDEX.md keyword files in the archives directory.
+Then immediately run `/clear` to reset the session. The new session starts
+clean — future sessions can discover this archive by grepping INDEX.md
+keyword files in the archives directory.
 
 ## Important Notes
 
