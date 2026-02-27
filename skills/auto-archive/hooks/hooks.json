@@ -1,0 +1,28 @@
+{
+  "description": "Auto-archive sessions when context window usage exceeds 60%.",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/check-context.sh check",
+            "async": true,
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/check-context.sh notify",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
