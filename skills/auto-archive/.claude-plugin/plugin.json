@@ -1,0 +1,8 @@
+{
+  "name": "auto-archive",
+  "version": "1.0.0",
+  "description": "Auto-archive sessions at 60% context window. Creates keyword-indexed archives for LLM discoverability.",
+  "author": {
+    "name": "otrofimo"
+  }
+}
