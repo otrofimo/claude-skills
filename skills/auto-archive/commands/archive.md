@@ -1,17 +1,20 @@
 ---
-description: Archive the current session with keywords and summary for future LLM discoverability. Auto-triggered at 60% context window or invoke manually.
+description: Archive the current session with structured handover for continuity and keyword-indexed catalog for long-term discoverability. Auto-triggered at 65% context window or invoke manually.
 argument-hint: "[--reason=<description>]"
 ---
 
 # Archive Skill
 
-You are performing a session archive. This preserves the current session's work
-as a searchable, structured record before context quality degrades.
+You are performing a session archive with context rotation. This preserves the
+current session's work in two forms:
+
+1. **HANDOVER.md** — Structured handover for seamless session continuity
+2. **Archive catalog** — Keyword-indexed record for long-term discoverability
 
 ## When This Runs
 
-- **Auto-triggered**: The auto-archive hook detected high context window usage
-  and injected a suggestion to run this command.
+- **Auto-triggered**: The context-gate hook blocked tool calls at 65% context
+  usage and forced you to write HANDOVER.md. You were then told to run `/archive`.
 - **Manual**: The user explicitly ran `/archive` to preserve their work.
 
 ## Archive Process
@@ -22,38 +25,79 @@ Follow these steps exactly:
 
 Check for the `CLAUDE_ARCHIVE_DIR` environment variable:
 
-```bash
-echo "${CLAUDE_ARCHIVE_DIR:-}"
-```
-
 - If `CLAUDE_ARCHIVE_DIR` is set and non-empty, use that directory.
 - If not set, use `<project_root>/archives/` where project_root is the
   current working directory.
 
-### Step 2: Generate Session Metadata
+### Step 2: Check for Existing Handover
 
-Analyze the current conversation to extract:
+Look for `HANDOVER.md` in the project root.
 
-1. **Session title**: A short, descriptive slug (lowercase, hyphens, max 50 chars).
-   Example: `refactor-auth-module`, `fix-payment-webhook`, `add-dark-mode`
-2. **Keywords**: 8-15 relevant terms for search/grep discoverability. Include:
-   - Technologies used (languages, frameworks, libraries)
-   - Concepts (refactoring, bugfix, feature, migration, etc.)
-   - Domain terms specific to the work done
-   - File types or architectural components touched
+**If HANDOVER.md exists** (auto-rotation path):
+- Read its content — this becomes the basis for the archive
+- Extract metadata (task, progress, files, decisions) from the handover
+- Do NOT re-analyze the entire conversation (context is already high)
+
+**If HANDOVER.md does NOT exist** (manual archive path):
+- Generate a handover document by analyzing the current conversation
+- Write `HANDOVER.md` to the project root with this structure:
+
+```markdown
+---
+session_id: <session_id if available>
+date: <YYYY-MM-DD HH:MM>
+trigger: manual
+status: handover
+---
+
+# Context Rotation Handover
+
+## Current Task
+<What you were working on — be specific>
+
+## Progress
+- [x] <Completed items>
+- [ ] <Remaining items>
+
+## Key Context
+<Critical decisions, patterns, or state the next session needs>
+
+## Modified Files
+- `<path>` — <what changed and why>
+
+## Next Steps
+1. <Immediate next action>
+2. <Following action>
+
+## Open Issues
+- <Any blockers or concerns>
+```
+
+### Step 3: Generate Session Metadata
+
+From the conversation (or from HANDOVER.md if it exists), extract:
+
+1. **Session title**: Short descriptive slug (lowercase, hyphens, max 50 chars).
+   Example: `refactor-auth-module`, `fix-payment-webhook`
+2. **Keywords**: 8-15 relevant terms for grep discoverability. Include:
+   - Technologies (languages, frameworks, libraries)
+   - Concepts (refactoring, bugfix, feature, migration)
+   - Domain terms specific to the work
+   - Architectural components touched
 3. **Summary**: 2-3 sentence overview of what was accomplished
-4. **Key decisions**: Bullet list of important choices made and their rationale
-5. **Files modified**: List of files that were created, edited, or deleted
-6. **Open items**: Any unfinished work, TODOs, or follow-up tasks
+4. **Key decisions**: Bullet list of important choices and rationale
+5. **Files modified**: List of files created, edited, or deleted
+6. **Open items**: Unfinished work or follow-up tasks
+7. **Rotation**: Whether this archive was triggered by auto-rotation
 
-### Step 3: Parse Arguments
+### Step 4: Parse Arguments
 
 Parse the `$ARGUMENTS` variable:
 
 1. If `--reason=<text>` is present, use it as additional context for the summary
 2. Everything else is treated as a description hint
 
-### Step 4: Create Archive Directory
+### Step 5: Create Archive Directory
 
 Create the session directory using today's date and the session title:
 
@@ -61,12 +105,12 @@ Create the session directory using today's date and the session title:
 <archive_root>/<YYYY-MM-DD>-<session-title>/
 ```
 
-If the directory already exists (re-archive of same topic on same day), append
-a numeric suffix: `<YYYY-MM-DD>-<session-title>-2/`
+If the directory already exists, append a numeric suffix:
+`<YYYY-MM-DD>-<session-title>-2/`
 
-Use `mkdir -p` to create the full path including the archive root if needed.
+Use the Write tool to create files — directory creation is handled automatically.
 
-### Step 5: Write INDEX.md
+### Step 6: Write INDEX.md
 
 Create `INDEX.md` in the session archive directory. This is the "pin file" —
 designed for rapid LLM scanning and grep discoverability.
@@ -78,7 +122,8 @@ Use this exact format:
 session_id: <session_id if available>
 date: <YYYY-MM-DD>
 topic: <session-title-slug>
-trigger: <auto|manual>
+trigger: <auto-rotation|manual>
+rotation: <true|false>
 status: archived
 ---
 
@@ -97,23 +142,21 @@ status: archived
 
 ## Files Modified
 - `<path>` - <what changed>
-- `<path>` - <what changed>
 ...
 
 ## Open Items
 - [ ] <unfinished task or follow-up>
-- [ ] <unfinished task or follow-up>
 ...
 ```
 
-### Step 6: Write session.md
+### Step 7: Write session.md
 
 Create `session.md` in the session archive directory with a detailed record:
 
 ```markdown
 # Session Archive: <Title>
 
-> Archived on <date> | Trigger: <auto|manual>
+> Archived on <date> | Trigger: <auto-rotation|manual>
 
 ## Overview
 <expanded summary, 1-2 paragraphs>
@@ -126,13 +169,10 @@ Create `session.md` in the session archive directory with a detailed record:
 ### <Topic/Phase 2>
 <description of what was done, why, and the outcome>
 
-...
-
 ## Code Snippets
 
 Include any important code patterns, configurations, or solutions that were
-developed during this session. These should be self-contained enough to be
-useful if referenced later.
+developed during this session.
 
 ## Lessons Learned
 - <insight gained during the session>
@@ -142,48 +182,50 @@ useful if referenced later.
 - <any URLs, documentation, or resources consulted>
 ```
 
-### Step 7: Update CATALOG.md
+### Step 8: Move HANDOVER.md to Archive
+
+If `HANDOVER.md` exists in the project root:
+- Copy its contents into `<archive_dir>/HANDOVER.md` for the permanent record
+- Delete the original from the project root (it has served its purpose)
+
+### Step 9: Update CATALOG.md
 
 Check if `CATALOG.md` exists in the archive root directory.
 
-**If CATALOG.md does not exist** (first-time setup), create it:
+**If CATALOG.md does not exist**, create it:
 
 ```markdown
 # Session Archive Catalog
 
 > Auto-maintained by the auto-archive skill. Do not edit manually.
 
-| Date | Session | Keywords | Trigger |
-|------|---------|----------|---------|
-| <date> | [<Title>](./<dir-name>/INDEX.md) | <top 5 keywords> | <trigger> |
+| Date | Session | Keywords | Trigger | Rotation |
+|------|---------|----------|---------|----------|
+| <date> | [<Title>](./<dir-name>/INDEX.md) | <top 5 keywords> | <trigger> | <yes/no> |
 ```
 
-**If CATALOG.md exists**, add a new row to the TOP of the Sessions table
-(newest first) and do not remove any existing rows.
+**If CATALOG.md exists**, add a new row to the TOP of the table (newest first).
 
-### Step 8: Clean Up Flag Files
+### Step 10: Clean Up and Clear
 
-Remove any auto-archive flag files for the current session:
+Remove auto-archive flag files for the current session:
 
 ```bash
-rm -f "${TMPDIR:-/tmp}/claude-archive-flag-${SESSION_ID}"
-rm -f "${TMPDIR:-/tmp}/claude-archive-notified-${SESSION_ID}"
+rm -f "${TMPDIR:-/tmp}/claude-archive-flag-${SESSION_ID}" 2>/dev/null
+rm -f "${TMPDIR:-/tmp}/claude-archive-notified-${SESSION_ID}" 2>/dev/null
+rm -f "${TMPDIR:-/tmp}/claude-handover-written-${SESSION_ID}" 2>/dev/null
 ```
 
-This resets the auto-archive trigger so it can fire again if the user
-continues working in the same session.
-
-### Step 9: Confirm and Clear
-
-After writing all files, output:
+Output the confirmation:
 
 ```
-Session saved to <archive_directory_path>
+Session archived to <archive_directory_path>
+Handover preserved for session recovery.
 ```
 
-Then immediately run `/clear` to reset the session. The new session starts
-clean — future sessions can discover this archive by grepping INDEX.md
-keyword files in the archives directory.
+Then immediately run `/clear` to reset the session. The SessionStart hook
+will detect the recent handover on the new session and inject it as context,
+allowing work to resume seamlessly.
 
 ## Important Notes
 
@@ -193,7 +235,7 @@ keyword files in the archives directory.
   for future LLM sessions using grep.
 - **Keep INDEX.md concise** — it's a "pin file" for rapid scanning, not a
   full record. Details go in session.md.
+- **Reuse HANDOVER.md when present** — if auto-rotation already forced a
+  handover, don't re-analyze the conversation. Extract from the handover.
 - **Handle re-archives gracefully** — if archiving the same session twice,
   create a new directory with a numeric suffix rather than overwriting.
-- **Create directories as needed** — use `mkdir -p` for the archive directory.
-  The archives root may not exist on first use.
