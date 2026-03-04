@@ -20,11 +20,14 @@ Normal work → Context hits 65% → PreToolUse BLOCKS tools
   → Agent writes HANDOVER.md (file I/O still allowed)
   → PostToolUse detects handover, tells agent to run /archive
   → /archive writes INDEX.md + session.md + CATALOG.md
-  → /archive ends with /clear
+  → /archive tells user to type /clear (agent cannot invoke /clear)
+  → User types /clear
   → SessionStart hook fires on fresh session
   → Detects recent HANDOVER.md, injects context
   → Agent resumes from handover's "Next Steps"
 ```
+
+**Note:** The agent cannot programmatically invoke `/clear` — it's a built-in CLI command that only the user can type. This is the one manual step in the pipeline. (VNX solves this with tmux `send-keys`, but that requires a tmux-based setup.)
 
 1. **Context gate** (`PreToolUse`) — Monitors transcript size every tool call. At 50%, logs a warning. At 65%, blocks all tools except file I/O (Read, Write, Edit, Glob, Grep) and demands the agent write `HANDOVER.md` with structured task state. This is a hard gate — the agent cannot do anything else until it complies.
 
@@ -128,4 +131,4 @@ After `/clear`, the new session starts with:
 [CONTEXT ROTATION RECOVERY] A previous session handed over work to you...
 ```
 
-The agent reads the handover and resumes from "Next Steps" — zero human intervention.
+The agent reads the handover and resumes from "Next Steps" — the only manual step is typing `/clear`.

@@ -206,7 +206,7 @@ Check if `CATALOG.md` exists in the archive root directory.
 
 **If CATALOG.md exists**, add a new row to the TOP of the table (newest first).
 
-### Step 10: Clean Up and Clear
+### Step 10: Clean Up and Prompt Clear
 
 Remove auto-archive flag files for the current session:
 
@@ -216,21 +216,25 @@ rm -f "${TMPDIR:-/tmp}/claude-archive-notified-${SESSION_ID}" 2>/dev/null
 rm -f "${TMPDIR:-/tmp}/claude-handover-written-${SESSION_ID}" 2>/dev/null
 ```
 
-Output the confirmation:
+Output the confirmation and tell the user to clear:
 
 ```
 Session archived to <archive_directory_path>
 Handover preserved for session recovery.
+
+Type /clear now to reset the context window. The SessionStart hook will
+automatically detect the handover and inject it into the fresh session so
+you can resume seamlessly.
 ```
 
-Then immediately run `/clear` to reset the session. The SessionStart hook
-will detect the recent handover on the new session and inject it as context,
-allowing work to resume seamlessly.
+**Important**: You cannot invoke `/clear` yourself — it is a built-in CLI
+command that only the user can type. Your job ends here. Tell the user to
+type `/clear` and stop. Do not attempt to call `/clear` or simulate it.
 
 ## Important Notes
 
-- **Always clear after archiving** — archive exists so you can confidently
-  start fresh. Archiving without clearing defeats the purpose.
+- **You cannot run /clear** — only the user can type `/clear`. After
+  archiving, tell them to do it. The SessionStart hook handles recovery.
 - **Be thorough with keywords** — these are the primary discovery mechanism
   for future LLM sessions using grep.
 - **Keep INDEX.md concise** — it's a "pin file" for rapid scanning, not a
