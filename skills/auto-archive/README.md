@@ -2,6 +2,9 @@
 
 Automatically rotates context when the window reaches 65% usage using a 3-hook pipeline inspired by [VNX orchestration](https://vincentvandeth.nl/blog/context-rot-claude-code-automatic-rotation). Blocks tool calls, forces a structured handover document, archives for long-term discoverability, and recovers seamlessly on session restart.
 
+**Inside tmux**: Fully automated — `/clear` is sent via `tmux send-keys`.
+**Outside tmux**: Almost fully automated — the user types `/clear` as the one manual step.
+
 ## Usage
 
 ```
@@ -13,31 +16,41 @@ The skill also runs automatically — a PreToolUse hook blocks tool calls at 65%
 
 ## How It Works
 
-### The 3-Hook Pipeline
+### The 3-Hook Pipeline + Rotation Script
 
 ```
 Normal work → Context hits 65% → PreToolUse BLOCKS tools
   → Agent writes HANDOVER.md (file I/O still allowed)
   → PostToolUse detects handover, tells agent to run /archive
   → /archive writes INDEX.md + session.md + CATALOG.md
-  → /archive tells user to type /clear (agent cannot invoke /clear)
-  → User types /clear
+  → PostToolUse detects CATALOG.md write (archive complete)
+  → Acquires atomic rotation lock
+  → [tmux] launches rotate.sh → sends /clear via send-keys
+  → [no tmux] tells user to type /clear
   → SessionStart hook fires on fresh session
   → Detects recent HANDOVER.md, injects context
   → Agent resumes from handover's "Next Steps"
 ```
 
-**Note:** The agent cannot programmatically invoke `/clear` — it's a built-in CLI command that only the user can type. This is the one manual step in the pipeline. (VNX solves this with tmux `send-keys`, but that requires a tmux-based setup.)
+### The 4 Components
 
-1. **Context gate** (`PreToolUse`) — Monitors transcript size every tool call. At 50%, logs a warning. At 65%, blocks all tools except file I/O (Read, Write, Edit, Glob, Grep) and demands the agent write `HANDOVER.md` with structured task state. This is a hard gate — the agent cannot do anything else until it complies.
+1. **Context gate** (`PreToolUse` → `context-gate.sh`) — Monitors transcript size on every tool call. At 50%, logs a soft warning. At 65%, blocks all tools except file I/O (Read, Write, Edit, Glob, Grep) and demands the agent write `HANDOVER.md`. This is a hard gate — the agent cannot do anything else until it complies. If a rotation lock exists (rotation in progress), all tools pass through.
 
-2. **Handover detector** (`PostToolUse`) — Watches for Write/Edit operations targeting files with "HANDOVER" in the name. When detected, sets a flag and tells the agent to run `/archive` to complete the rotation.
+2. **Handover detector** (`PostToolUse` → `handover-detector.sh`) — Two-stage detection:
+   - **Stage 1**: Watches for Write/Edit targeting files with "HANDOVER" in the name. Sets a flag and tells the agent to run `/archive`.
+   - **Stage 2**: Watches for CATALOG.md writes (signals archive completion). Acquires an atomic rotation lock, then either launches `rotate.sh` (tmux) or tells the user to type `/clear` (no tmux).
 
-3. **Session recovery** (`SessionStart`) — On fresh sessions after `/clear`, looks for a recent `HANDOVER.md` (< 5 minutes old) and injects its content as context. The new session picks up exactly where the old one left off.
+3. **Rotation script** (`rotate.sh`) — Background process launched by the handover detector. Waits 3 seconds for the agent to stop, then sends `/clear` + Enter to the current tmux pane via `send-keys`. Exits silently if not inside tmux.
+
+4. **Session recovery** (`SessionStart` → `session-recovery.sh`) — On fresh sessions after `/clear`, looks for a recent `HANDOVER.md` (< 5 minutes old) and injects its content as context. Cleans up flag files and rotation locks. The new session picks up exactly where the old one left off.
 
 ### Why 65%?
 
 Claude Code's built-in auto-compaction fires at ~80%. Rotating at 65% gives 15 points of headroom to complete the handover + archive + clear cycle before auto-compaction races and wins. If auto-compaction fires first, nuanced context is lost.
+
+### Atomic Locking
+
+The handover detector uses `mkdir`-based atomic locking (POSIX-guaranteed atomic) to prevent double-rotation when hooks fire in rapid succession. Locks have a 300-second TTL for stale detection.
 
 ### Dual-Purpose Output
 
@@ -52,7 +65,7 @@ Unlike simple handover-only approaches, this skill produces:
 
 ```
 project-root/
-├── HANDOVER.md                          # Temporary — written during rotation, cleaned up after archive
+├── HANDOVER.md                          # Temporary — written during rotation, moved to archive
 └── archives/
     ├── CATALOG.md                       # Index of all archived sessions
     └── 2025-06-15-refactor-auth-module/
@@ -107,6 +120,16 @@ Using RS256 signing. Refresh tokens stored in httpOnly cookies...
 - Need to decide on refresh token TTL (currently 7 days)
 ```
 
+## tmux vs Non-tmux Behavior
+
+| Step | tmux | No tmux |
+|------|------|---------|
+| Context pressure detection | Automatic | Automatic |
+| Handover writing | Forced by hook | Forced by hook |
+| Archive catalog | Automatic | Automatic |
+| `/clear` | Automated via `send-keys` | User types it manually |
+| Session recovery | Automatic | Automatic |
+
 ## Example
 
 After working on a feature, context reaches 65%:
@@ -125,10 +148,16 @@ archives/2025-06-15-refactor-auth-module/
 └── HANDOVER.md  (preserved handover for the record)
 ```
 
+In tmux, `/clear` fires automatically. Outside tmux:
+
+```
+[ROTATION] Archive complete. Type /clear now to reset the context window.
+```
+
 After `/clear`, the new session starts with:
 
 ```
 [CONTEXT ROTATION RECOVERY] A previous session handed over work to you...
 ```
 
-The agent reads the handover and resumes from "Next Steps" — the only manual step is typing `/clear`.
+The agent reads the handover and resumes from "Next Steps".

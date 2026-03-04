@@ -206,35 +206,38 @@ Check if `CATALOG.md` exists in the archive root directory.
 
 **If CATALOG.md exists**, add a new row to the TOP of the table (newest first).
 
-### Step 10: Clean Up and Prompt Clear
+### Step 10: Clean Up
 
-Remove auto-archive flag files for the current session:
+Remove old flag files for the current session (rotation lock is managed
+by the hooks, do not touch it here):
 
 ```bash
 rm -f "${TMPDIR:-/tmp}/claude-archive-flag-${SESSION_ID}" 2>/dev/null
 rm -f "${TMPDIR:-/tmp}/claude-archive-notified-${SESSION_ID}" 2>/dev/null
-rm -f "${TMPDIR:-/tmp}/claude-handover-written-${SESSION_ID}" 2>/dev/null
 ```
 
-Output the confirmation and tell the user to clear:
+Output the confirmation:
 
 ```
 Session archived to <archive_directory_path>
 Handover preserved for session recovery.
-
-Type /clear now to reset the context window. The SessionStart hook will
-automatically detect the handover and inject it into the fresh session so
-you can resume seamlessly.
 ```
 
-**Important**: You cannot invoke `/clear` yourself — it is a built-in CLI
-command that only the user can type. Your job ends here. Tell the user to
-type `/clear` and stop. Do not attempt to call `/clear` or simulate it.
+**Do not attempt to invoke `/clear`** — you cannot. The PostToolUse hook
+will detect that CATALOG.md was written (archive complete) and handle
+the rotation automatically:
+
+- **Inside tmux**: The hook launches `rotate.sh` which sends `/clear`
+  via `tmux send-keys`. Fully automated.
+- **Outside tmux**: The hook tells the user to type `/clear` manually.
+
+Either way, the SessionStart hook will inject the handover content into
+the fresh session so work resumes seamlessly. Your job ends here — stop
+after outputting the confirmation message.
 
 ## Important Notes
 
-- **You cannot run /clear** — only the user can type `/clear`. After
-  archiving, tell them to do it. The SessionStart hook handles recovery.
+- **You cannot run /clear** — the hooks handle it. Stop after archiving.
 - **Be thorough with keywords** — these are the primary discovery mechanism
   for future LLM sessions using grep.
 - **Keep INDEX.md concise** — it's a "pin file" for rapid scanning, not a

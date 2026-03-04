@@ -78,7 +78,8 @@ ${HANDOVER_CONTENT}
 Continue from where the previous session left off. Review the handover above and resume the task described in "Next Steps". The handover document is located at: ${HANDOVER_PATH}
 EOF
 
-# Clean up flag files (handover file itself is preserved for archive)
+# Clean up flag files and rotation locks
 rm -f "${FLAG_DIR}"/claude-handover-written-*
+rm -rf "${FLAG_DIR}"/claude-rotation-lock-*
 
 exit 0

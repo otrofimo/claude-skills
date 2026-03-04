@@ -42,7 +42,14 @@ FILE_SIZE=$(stat -f%z "$TRANSCRIPT_PATH" 2>/dev/null \
 # --- Flag/state management ---
 FLAG_DIR="${TMPDIR:-/tmp}"
 HANDOVER_FLAG="${FLAG_DIR}/claude-handover-written-${SESSION_ID}"
+LOCK_DIR="${FLAG_DIR}/claude-rotation-lock-${SESSION_ID}"
 PROJECT_ROOT="${CWD:-.}"
+
+# If rotation lock exists, a rotation is already in progress — allow everything
+# so the agent can finish archiving without interference
+if [ -d "$LOCK_DIR" ]; then
+  exit 0
+fi
 
 # Check if handover has been written
 handover_exists() {
