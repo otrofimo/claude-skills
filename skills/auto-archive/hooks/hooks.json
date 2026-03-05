@@ -1,24 +1,36 @@
 {
-  "description": "Auto-archive sessions when context window usage exceeds 60%.",
+  "description": "3-hook context rotation pipeline. Blocks tools at 65% context, forces structured handover, detects handover completion, and recovers on fresh sessions.",
   "hooks": {
-    "Stop": [
+    "PreToolUse": [
       {
+        "matcher": ".*",
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/check-context.sh check",
-            "async": true,
-            "timeout": 10
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/context-gate.sh",
+            "timeout": 5
           }
         ]
       }
     ],
-    "UserPromptSubmit": [
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/handover-detector.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/check-context.sh notify",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/session-recovery.sh",
             "timeout": 5
           }
         ]

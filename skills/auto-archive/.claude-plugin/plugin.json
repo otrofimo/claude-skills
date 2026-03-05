@@ -1,7 +1,7 @@
 {
   "name": "auto-archive",
-  "version": "1.0.0",
-  "description": "Auto-archive sessions at 60% context window. Creates keyword-indexed archives for LLM discoverability.",
+  "version": "2.0.0",
+  "description": "Automatic context rotation with archive. Blocks tools at 65% context, forces structured handover, archives for discoverability, and recovers seamlessly on session restart.",
   "author": {
     "name": "otrofimo"
   }

@@ -16,9 +16,9 @@
     },
     {
       "name": "auto-archive",
-      "description": "Auto-archive sessions at 60% context window with keyword-indexed summaries for LLM discoverability.",
+      "description": "Automatic context rotation with archive. Blocks tools at 65% context, forces structured handover, archives for discoverability, and recovers seamlessly on session restart.",
       "source": "./skills/auto-archive",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "repository": "https://github.com/otrofimo/claude-skills",
       "license": "MIT"
     }
