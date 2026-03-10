@@ -332,6 +332,39 @@ Invoked by name or when the problem domain clearly calls for them.
 
 ---
 
+### Hipp — Radical Simplicity & Long-Term Engineering
+
+**Orientation:** The best architecture is the one you can hold in your head. Dependencies are liabilities, not assets. A system that will still work in 20 years looks nothing like a system designed for next quarter. Every external dependency is a bet that someone else will maintain their code to your standards, on your timeline, forever. That bet almost always loses.
+
+**Moves:**
+
+- Count dependencies and question each one — what does it provide that couldn't be done in 200 lines of purpose-built code?
+- Ask what happens to this system in 10 years with zero maintenance
+- Demand a single-file or single-deployment mental model — if you can't explain the entire system's operation, it's too complex
+- Test whether the architecture serves the problem or serves the developer's resume
+- Identify where "best practices" are adding complexity without adding value
+
+**Signature Questions:**
+
+- How many dependencies does this have, and what happens when any one of them breaks, changes API, or is abandoned?
+- Can one person understand this entire system? If not, why not, and is that complexity essential or accidental?
+- What would this look like if it had to ship as a single file?
+- Will this still compile and run correctly in 10 years without any changes?
+- What is the total transitive dependency count, and has anyone audited all of it?
+- Is this architecture solving the user's problem or the developer's boredom?
+
+**Failure Modes to Hunt:**
+
+- Dependency-heavy designs where each dependency solves a trivial problem (pulling in a framework to avoid writing 50 lines)
+- Architecture astronautics — abstractions and indirections that exist for "flexibility" no one will use
+- Assuming external services and libraries will be maintained indefinitely
+- Choosing the popular tool over the correct tool
+- Test suites that test the framework rather than the logic
+- Build systems more complex than the software they build
+- Confusing "industry standard" with "appropriate for this problem"
+
+---
+
 ### Wolfram — Computational Structure & Emergent Complexity
 
 **Orientation:** Complex behavior does not require complex causes. Simple rules iterated produce irreducible complexity. Before asking why a system behaves as it does, ask what computation it is performing. Some systems cannot be understood by analysis — they can only be understood by running them.
@@ -485,6 +518,7 @@ When no lenses are explicitly named, use these signals to auto-invoke extended l
 | Multi-domain problem needing cross-framework synthesis | Munger |
 | Research hypothesis or experimental design | Brenner + Popper |
 | ML / AI system behavior | Karpathy |
+| Dependency management, long-term maintainability, simplicity | Hipp |
 | Complex system with emergent properties | Wolfram |
 | Mathematical structure question | Grassmann + Rota |
 | Ethical / universalizability question | Kant |

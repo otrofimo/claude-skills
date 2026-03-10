@@ -35,6 +35,7 @@ Invoked by name or by domain signal.
 | Brenner | Hypothesis structure & experimental design |
 | Popper | Falsifiability & critical rationalism |
 | Karpathy | Empirical grounding & practical system behavior |
+| Hipp | Radical simplicity & long-term engineering |
 | Wolfram | Computational structure & emergent complexity |
 | Grassmann | Algebraic structure & geometric generalization |
 | Rota | Combinatorial structure & mathematical phenomenology |
@@ -50,6 +51,7 @@ Extended lenses auto-invoke when the problem matches:
 - Multi-domain problem needing cross-framework synthesis → **Munger**
 - Research hypothesis or experimental design → **Brenner** + **Popper**
 - ML / AI system behavior → **Karpathy**
+- Dependency management, long-term maintainability, simplicity → **Hipp**
 - Complex system with emergent properties → **Wolfram**
 - Mathematical structure question → **Grassmann** + **Rota**
 - Ethical / universalizability question → **Kant**
