@@ -26,7 +26,9 @@ Always run unless specific lenses are named.
 
 ## Extended Lenses
 
-Invoked by name or by domain signal.
+Invoked by name or by domain signal. Organized by domain.
+
+### Foundational
 
 | Lens | Protocol |
 |------|----------|
@@ -34,13 +36,79 @@ Invoked by name or by domain signal.
 | Munger | Mental models & second-order effects |
 | Brenner | Hypothesis structure & experimental design |
 | Popper | Falsifiability & critical rationalism |
-| Karpathy | Empirical grounding & practical system behavior |
-| Hipp | Radical simplicity & long-term engineering |
-| Wolfram | Computational structure & emergent complexity |
-| Grassmann | Algebraic structure & geometric generalization |
-| Rota | Combinatorial structure & mathematical phenomenology |
 | Pascal | Expected value & asymmetric bets |
 | Kant | Universalizability & the limits of reason |
+
+### Design
+
+| Lens | Protocol |
+|------|----------|
+| Ive | Reductive design & material honesty |
+| Norman | Cognitive ergonomics & error prevention |
+| Rams | Design discipline & principled reduction |
+| Kelley | Creative confidence & human-centered discovery |
+| Jobs | Integration, taste & saying no |
+
+### Engineering
+
+| Lens | Protocol |
+|------|----------|
+| Lamport | Specification & formal reasoning |
+| Dean | Scale engineering & practical systems design |
+| Torvalds | Code taste & opinionated simplicity |
+| Thompson | Minimalist systems & compositional design |
+| Hipp | Radical simplicity & long-term engineering |
+| Karpathy | Empirical grounding & practical system behavior |
+| Wolfram | Computational structure & emergent complexity |
+
+### Mathematics
+
+| Lens | Protocol |
+|------|----------|
+| Grassmann | Algebraic structure & geometric generalization |
+| Rota | Combinatorial structure & mathematical phenomenology |
+
+### Business & Strategy
+
+| Lens | Protocol |
+|------|----------|
+| Dalio | Principles & radical transparency |
+| Buffett | Circle of competence & long-term compounding |
+| Graham | Startup reasoning & building under uncertainty |
+| Cuban | Execution & competitive advantage through effort |
+
+### Product
+
+| Lens | Protocol |
+|------|----------|
+| Dunford | Positioning & market context |
+| Fried | Constraint-based product & calm engineering |
+
+### Refactoring
+
+| Lens | Protocol |
+|------|----------|
+| Beck | Test-driven development & small steps |
+| Fowler | Code smells & evolutionary design |
+| Thomas | Pragmatic engineering & orthogonality |
+
+### Security
+
+| Lens | Protocol |
+|------|----------|
+| Schneier | Threat modeling & systems thinking |
+| Hunt | Attack surface & data exposure |
+| Hypponen | Adversary motivation & global threat landscape |
+| Ormandy | Offensive analysis & vulnerability hunting |
+| Ptacek | Practical security & implementation pitfalls |
+
+### Agentic & AI
+
+| Lens | Protocol |
+|------|----------|
+| Huntley | AI-assisted development practices & tooling |
+| Yegge | Platform thinking & developer experience |
+| Willison | Practical AI applications & transparent engineering |
 
 ## Domain Signals
 
@@ -50,10 +118,26 @@ Extended lenses auto-invoke when the problem matches:
 - Decision under uncertainty with significant downside → **Pascal** + **Taleb**
 - Multi-domain problem needing cross-framework synthesis → **Munger**
 - Research hypothesis or experimental design → **Brenner** + **Popper**
-- ML / AI system behavior → **Karpathy**
+- UI/UX, visual design, aesthetics → **Ive** + **Norman** + **Rams**
+- Design process, user research, creative problem-solving → **Kelley** + **Jobs**
+- Distributed systems, formal verification → **Lamport** + **Dijkstra**
+- Systems at scale, performance, infrastructure → **Dean**
+- Code quality, readability, interface design → **Torvalds** + **Thompson**
 - Dependency management, long-term maintainability, simplicity → **Hipp**
+- ML / AI system behavior → **Karpathy**
 - Complex system with emergent properties → **Wolfram**
 - Mathematical structure question → **Grassmann** + **Rota**
+- Business model, competitive strategy, investment → **Buffett** + **Cuban**
+- Startup, product-market fit, early-stage decisions → **Graham**
+- Decision-making process, organizational learning → **Dalio**
+- Product positioning, go-to-market → **Dunford**
+- Feature scope, sustainable product development → **Fried**
+- Refactoring, code evolution, technical debt → **Beck** + **Fowler** + **Thomas**
+- Security architecture, threat assessment → **Schneier** + **Hypponen**
+- Data security, breach prevention, attack surface → **Hunt** + **Ormandy**
+- Cryptographic implementation, auth protocols → **Ptacek**
+- AI tooling, agentic workflows, LLM integration → **Huntley** + **Willison**
+- Platform design, developer experience, APIs → **Yegge**
 - Ethical / universalizability question → **Kant**
 
 ## Output Format
