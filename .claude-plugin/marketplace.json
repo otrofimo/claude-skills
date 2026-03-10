@@ -15,6 +15,14 @@
       "license": "MIT"
     },
     {
+      "name": "interrogation-protocol",
+      "description": "Cognitive lens interrogation protocols. Named thinkers run as operational methods — not persona simulations. Each lens applies specific moves, questions, and failure-mode hunts to any problem.",
+      "source": "./skills/interrogation-protocol",
+      "version": "1.0.0",
+      "repository": "https://github.com/otrofimo/claude-skills",
+      "license": "MIT"
+    },
+    {
       "name": "auto-archive",
       "description": "Automatic context rotation with archive. Blocks tools at 65% context, forces structured handover, archives for discoverability, and recovers seamlessly on session restart.",
       "source": "./skills/auto-archive",
