@@ -7,6 +7,7 @@ A collection of skills for [Claude Code](https://docs.anthropic.com/en/docs/clau
 | Skill | Command | Description |
 |-------|---------|-------------|
 | [Council](skills/council/) | `/council` | Virtual advisory board of domain experts. Feynman is always present to ask first-principles questions. |
+| [Interrogation Protocol](skills/interrogation-protocol/) | `/interrogate` | Cognitive lens analysis — 36 operational protocols across design, engineering, business, product, refactoring, security, and AI. Not persona simulation; transferable methods. |
 | [Auto-Archive](skills/auto-archive/) | `/archive` | Auto-archive sessions at 60% context window with keyword-indexed summaries for LLM discoverability. |
 
 ## Installation
@@ -19,6 +20,7 @@ A collection of skills for [Claude Code](https://docs.anthropic.com/en/docs/clau
 
 # Install a skill
 /plugin install council@claude-skills
+/plugin install interrogation-protocol@claude-skills
 /plugin install auto-archive@claude-skills
 ```
 
@@ -27,6 +29,7 @@ A collection of skills for [Claude Code](https://docs.anthropic.com/en/docs/clau
 ```bash
 # Remove a skill
 /plugin uninstall council@claude-skills
+/plugin uninstall interrogation-protocol@claude-skills
 /plugin uninstall auto-archive@claude-skills
 
 # Remove the marketplace (optional)
@@ -40,6 +43,7 @@ Clone and copy the skill you want:
 ```bash
 git clone https://github.com/otrofimo/claude-skills.git
 cp -r claude-skills/skills/council ~/.claude/skills/
+cp -r claude-skills/skills/interrogation-protocol ~/.claude/skills/
 cp -r claude-skills/skills/auto-archive ~/.claude/skills/
 ```
 
