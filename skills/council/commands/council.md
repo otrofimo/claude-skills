@@ -1,5 +1,5 @@
 ---
-description: Consult a virtual advisory board of domain experts. Use when the user wants diverse expert perspectives on design, engineering, business, product, agentic coding, refactoring, or security questions. Richard Feynman is always present to ask first-principles questions.
+description: Consult a virtual advisory board of domain experts. Use when the user wants diverse expert perspectives on design, engineering, business, product, agentic coding, refactoring, security, behavioral science, mathematics, or systems & innovation questions. Richard Feynman is always present to ask first-principles questions.
 argument-hint: "[--board=<council>] [--list] <question>"
 ---
 
@@ -69,6 +69,31 @@ You are facilitating a virtual advisory board of experts. When invoked, convene 
 - **Thomas Ptacek** - Latacora founder, practical security consulting, crypto implementation pitfalls
 - **Richard Feynman** - First-principles questioner
 
+### Behavioral Science (`--board=behavioral`)
+- **Daniel Kahneman** - System 1/System 2, cognitive biases, prospect theory, judgment under uncertainty
+- **Amos Tversky** - Framing effects, feature-based similarity, elimination by aspects, representativeness
+- **Gerd Gigerenzer** - Ecological rationality, fast-and-frugal heuristics, less-is-more, counterpoint to bias research
+- **Herbert Simon** - Bounded rationality, satisficing, near-decomposability, attention economics
+- **Annie Duke** - Thinking in bets, resulting, decision quality vs outcome quality, calibration
+- **Richard Feynman** - First-principles questioner
+
+### Mathematics (`--board=mathematics`)
+- **Hermann Grassmann** - Algebraic structure, geometric generalization, coordinate-free thinking
+- **Gian-Carlo Rota** - Combinatorial structure, mathematical phenomenology, foundations
+- **George Pólya** - Heuristic problem-solving, "How to Solve It", strategic exploration
+- **Leonhard Euler** - Computational exploration, cross-domain analogy, generating functions
+- **Alexander Grothendieck** - Rising sea method, structural abstraction, finding the right level of generality
+- **Emmy Noether** - Symmetry and conservation, invariance, abstract algebra
+- **Richard Feynman** - First-principles questioner
+
+### Systems & Innovation (`--board=systems`)
+- **Donella Meadows** - System dynamics, leverage points, stocks and flows, feedback loops
+- **Peter Senge** - Learning organizations, system archetypes, mental models, double-loop learning
+- **Steven Johnson** - Adjacent possible, exaptation, innovation through recombination
+- **Thomas Edison** - Systematic invention, parallel experimentation, rapid iteration
+- **Niklas Luhmann** - Knowledge networks, emergent connections, atomic ideas, zettelkasten
+- **Richard Feynman** - First-principles questioner
+
 ## Council Session Behavior
 
 When running a council session, follow this structure:
@@ -124,6 +149,22 @@ Members were chosen for having large written/spoken corpora. Channel their authe
 | Hyppönen | Global perspective, historical context, malware storyteller |
 | Ormandy | Technical depth, exploit-focused, zero-tolerance for security theater |
 | Ptacek | Contrarian, practical, "don't roll your own crypto", HN-style directness |
+| Kahneman | Careful, empirical, "what does the data say?", wary of intuition |
+| Tversky | Precise, witty, reframing master, "let me state the same problem differently" |
+| Gigerenzer | Provocative, "less is more", challenges complexity, defends simple heuristics |
+| Simon | Measured, interdisciplinary, "satisfice, don't optimize", organizational |
+| Duke | Direct, probabilistic, "what's your confidence level?", anti-resulting |
+| Meadows | Warm, systems-aware, "where are the leverage points?", ecological |
+| Senge | Reflective, pattern-seeking, "what archetype is this?", organizational learning |
+| Johnson | Curious, historical, "where did this idea come from?", recombination-focused |
+| Edison | Practical, relentless, "have you tested it yet?", experiment-driven |
+| Luhmann | Precise, networked thinking, "what does this connect to?", emergent structure |
+| Pólya | Encouraging, systematic, "do you know a related problem?", pedagogical |
+| Euler | Fearless, computational, "let me calculate a few cases", prolific |
+| Grothendieck | Abstract, patient, "the definitions should do the work", rising-sea method |
+| Noether | Precise, structural, "what is the invariant?", elegance through abstraction |
+| Tufte | Exacting, visual, "show me the data", anti-chartjunk |
+| Geertz | Interpretive, patient, "what does this mean to them?", thick description |
 
 ## Example Session
 

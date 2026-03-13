@@ -450,6 +450,130 @@ Invoked by name or when the problem domain clearly calls for them.
 
 ---
 
+### Pólya — Heuristic Problem-Solving & Strategic Exploration
+
+**Orientation:** Solving problems is a practical art, like swimming — you learn it by practice, not by reading about it. But there are systematic heuristics that make you better. The four phases — understand, plan, execute, look back — are not bureaucracy; they are the difference between flailing and problem-solving. The most powerful move is asking: "Do I know a related problem?"
+
+**Moves:**
+
+- Understand the problem first: What is the unknown? What are the data? What is the condition? Is the condition sufficient? Redundant? Contradictory?
+- Find a related problem: Have you seen this before? Do you know a related problem with a known solution? Can you use its method?
+- Specialize and generalize: Solve a simpler version. Solve a special case. Then ask what the general principle is.
+- Work backwards: Start from the desired result. What would you need to be true one step before the conclusion?
+- Look back: Can you check the result? Can you derive it differently? Can you use the result or method for some other problem?
+
+**Signature Questions:**
+
+- What is the unknown? What are we actually trying to find or prove?
+- Do I know a related problem? Can I restate this as a problem I've already solved?
+- Can I solve a simpler version first?
+- What happens if I work backwards from the desired conclusion?
+- Can I check this result by an independent method?
+- Is there a more general principle here that this is a special case of?
+
+**Failure Modes to Hunt:**
+
+- Plunging into execution without understanding the problem (skipping phase 1)
+- Not looking for related problems — treating every problem as novel when it isn't
+- Solving a harder problem than necessary (failing to simplify)
+- Never looking back — getting an answer and moving on without verification or generalization
+- Confusing the inability to solve a problem with the problem being unsolvable
+
+---
+
+### Euler — Computational Exploration & Cross-Domain Analogy
+
+**Orientation:** Compute. Compute specific cases. Compute many of them. The patterns that emerge from concrete computation are more reliable guides than abstract speculation. The deepest truths often reveal themselves through fearless calculation — pushing formulas past their apparent domain of validity, finding that discrete and continuous are mirrors of each other, and trusting the algebra even when rigor hasn't caught up.
+
+**Moves:**
+
+- Compute small cases systematically and look for patterns before attempting a general proof
+- Push formulas beyond their apparent domain: apply a continuous result to discrete cases (or vice versa) and see what it says
+- Introduce a generating function: encode a sequence as coefficients and operate on the whole function
+- Use analogy across domains: if a result holds for sums, does an analogous result hold for integrals?
+- When stuck, add a parameter — generalize the problem and solve the family, not the instance
+
+**Signature Questions:**
+
+- What do the first 5-10 specific cases look like? Is there a pattern?
+- What happens if I treat this discrete problem as continuous (or vice versa)?
+- Can I encode this as a generating function and extract the answer from the algebra?
+- What would happen if I pushed this formula past its obvious domain of validity?
+- Is there a parameter I can add that makes the general problem easier than the specific one?
+- What is the continuous analogue of this discrete structure?
+
+**Failure Modes to Hunt:**
+
+- Attempting abstract proof before computing enough cases to see the pattern
+- Treating discrete and continuous as fundamentally different when they're analogous
+- Fear of non-rigorous exploration (rigor can come later; insight must come first)
+- Solving one instance when parameterizing the family would be easier
+- Missing a generating function representation that would make the answer algebraically transparent
+
+---
+
+### Grothendieck — Structural Abstraction & The Rising Sea
+
+**Orientation:** Do not attack the problem — immerse it. The right approach is not to crack the nut with a hammer, but to let the sea rise until the nut opens by itself. This means finding the right level of generality — the context in which the hard problem becomes a trivial consequence of the definitions. If the proof is hard, the definitions are wrong. The goal is to build the right category, not to be clever.
+
+**Moves:**
+
+- Don't solve the problem directly — find the right context in which it dissolves
+- Generalize relentlessly: what is the most general setting in which this statement holds?
+- Define the right morphisms: the maps between objects tell you more than the objects themselves
+- Ask what structure is preserved, not what objects look like concretely
+- Let definitions do the work: if the proof requires ingenuity, the conceptual framework is insufficiently developed
+
+**Signature Questions:**
+
+- What is the right category for this problem? What are the objects and morphisms?
+- Is this hard because the abstraction level is wrong? Would it be trivial in a more general setting?
+- What structure is preserved under the natural transformations here?
+- Are we studying the objects or the relationships between objects? (The relationships are usually more fundamental.)
+- What would the "right" definition be — the one that makes the theorem a tautology?
+- Can we replace this specific argument with a universal property?
+
+**Failure Modes to Hunt:**
+
+- Clever tricks substituting for conceptual understanding (solving the problem without understanding it)
+- Working at the wrong level of abstraction — either too concrete or too general
+- Focusing on objects rather than morphisms and functors
+- Definitions that require external conditions rather than capturing the phenomenon intrinsically
+- Specificity disguised as generality: claiming generality while the argument secretly depends on special features
+
+---
+
+### Noether — Symmetry, Invariance & Conservation
+
+**Orientation:** The deepest question is: what doesn't change? Every symmetry produces a conservation law; every conservation law implies a symmetry. If you can identify what transformation leaves the system unchanged, you've found the invariant that governs its behavior. Strip away the concrete objects and work with the abstract structure of their relations. The most powerful mathematics is the most abstract — not because abstraction is a virtue, but because it reveals what's actually doing the work.
+
+**Moves:**
+
+- Find the invariant: what quantity, property, or structure is preserved across transformations?
+- Identify the symmetry: what transformation leaves the system unchanged?
+- Abstract the structure: replace specific objects with their algebraic relationships
+- Ask what the minimal algebraic structure is that captures the phenomenon
+- Test by breaking: if you break the symmetry, what conservation law fails? If a conserved quantity changes, what symmetry was violated?
+
+**Signature Questions:**
+
+- What is conserved here? What doesn't change as the system evolves?
+- What symmetry produces this conservation law?
+- If I abstract away the specific objects and keep only the relations, what algebraic structure remains?
+- What is the minimal structure needed — what can I remove and still have the phenomenon?
+- If I break this symmetry, what should I expect to change?
+- Are there hidden symmetries I haven't noticed yet?
+
+**Failure Modes to Hunt:**
+
+- Missing a conserved quantity that would simplify the analysis
+- Treating a specific representation as fundamental when it's the abstract structure that matters
+- Over-specifying: including structure that isn't actually needed for the result
+- Failing to check what happens when symmetry is broken (the exceptions reveal the rule)
+- Confusing notational symmetry with structural symmetry
+
+---
+
 ### Pascal — Expected Value & Asymmetric Bets
 
 **Orientation:** Uncertainty is not a reason to suspend judgment — it is the domain in which judgment operates. Every decision under uncertainty is a wager, and the question is whether it is a good one. Infinite consequences demand special treatment. Expected value is the minimum framework; ignoring it is not humility, it's innumeracy.
@@ -1346,6 +1470,452 @@ Invoked by name or when the problem domain clearly calls for them.
 
 ---
 
+## Behavioral Science Lenses
+
+---
+
+### Kahneman — Cognitive Bias & Judgment Under Uncertainty
+
+**Orientation:** Human judgment is not noisy rationality — it is systematically biased. System 1 (fast, automatic, associative) does most of the work and System 2 (slow, deliberate, logical) is often just rationalizing System 1's conclusions. The operational question is never "is this person rational?" but "what substitution is happening?" — what easy question is being answered in place of the hard one? Base rates are ignored, plans are optimistic, losses loom larger than gains, and what you see is all there is.
+
+**Moves:**
+
+- Identify the substitution: What easy question is System 1 answering instead of the hard question that was actually asked?
+- Check the base rate: Before evaluating this specific case, what does the reference class say? What percentage of projects/decisions/predictions like this one succeed?
+- Run a pre-mortem: Assume this plan has failed spectacularly one year from now. What went wrong? (Surfaces planning fallacy and overconfidence.)
+- Audit for noise: Would a different analyst, team, or day of the week produce a different answer to the same question? If so, the process has a noise problem.
+- Test for WYSIATI (What You See Is All There Is): What information is NOT in front of you right now that would change this judgment?
+
+**Signature Questions:**
+
+- What is the base rate for this kind of outcome? Are we ignoring it in favor of the specific case?
+- What substitution is happening? Is System 1 answering a different, easier question?
+- What would the outside view predict? (Not "how does this feel from inside?" but "what happens statistically?")
+- If this plan fails, what's the most likely reason? (Pre-mortem)
+- What information is missing from this picture that would change the conclusion? (WYSIATI)
+- Would a different person, given the same data, reach the same conclusion? If not, why not? (Noise audit)
+- Where is loss aversion distorting the decision? Are we overweighting potential losses relative to equivalent gains?
+
+**Failure Modes to Hunt:**
+
+- Planning fallacy: timelines that assume best-case execution with no contingency
+- Anchoring: a number was mentioned early and is now distorting all subsequent estimates
+- Availability bias: recent or vivid events dominating probability estimates over actual frequencies
+- Substitution: answering "do I like this?" instead of "is this effective?" (or any easy question replacing a hard one)
+- WYSIATI: building confident narratives from incomplete information
+- Overconfidence: confidence calibration that doesn't match actual accuracy rates
+- Sunk cost: continuing because of past investment rather than future expected value
+
+---
+
+### Tversky — Framing, Features & Elimination
+
+**Orientation:** How a problem is represented determines what conclusions feel natural — and many apparently firm conclusions are artifacts of the frame, not the facts. The same objective situation, stated differently, produces different choices — which means at least one of those choices is frame-dependent rather than truth-dependent. Similarity is not a fixed relation but a feature-weighting process, and what features dominate the comparison is itself a choice, often invisible.
+
+**Moves:**
+
+- Frame reversal: Restate the exact same problem in a different frame (gains vs. losses, survival vs. mortality, keep vs. discard). If the conclusion changes, it was frame-dependent.
+- Feature decomposition: What features are being used to compare these options? Which features are being weighted heavily, and is that weighting justified or habitual?
+- Elimination by aspects: What is being eliminated from consideration, and on what single dimension? Is that dimension actually the most important one?
+- Conjunction audit: Is a conjunction (A and B) being judged more probable than one of its components? (It can't be — but it often feels that way when the conjunction is a good story.)
+- Support theory check: Is the evidence being "unpacked" into vivid sub-cases (making it seem more probable) or "packed" into a single category (making it seem less probable)?
+
+**Signature Questions:**
+
+- Does this conclusion change if I frame the same facts differently? (If yes, the conclusion is about the frame, not the facts.)
+- What features dominate this comparison? Are they the right features?
+- What option was eliminated early, and on what basis? Would it survive if we changed the elimination criterion?
+- Is this judgment based on a representative story rather than a statistical model? Does the story's coherence feel like probability?
+- Are we comparing options by their shared features or their distinctive features? (Tversky showed these produce different similarity orderings.)
+- Is the evidence unpacked or packed? Would re-describing it change the probability estimate?
+
+**Failure Modes to Hunt:**
+
+- Frame-dependent conclusions: answers that reverse when the same data is described differently
+- Feature domination: one salient feature overwhelming other relevant dimensions
+- Premature elimination: discarding options based on one aspect before evaluating the whole picture
+- Conjunction fallacy: a detailed scenario feeling more probable than a general one because it's a better story
+- Representativeness over base rate: "this looks like X" overriding "X is rare"
+- Asymmetric unpacking: one hypothesis gets detailed elaboration (seeming more probable) while the alternative stays vague
+
+---
+
+## Systems & Complexity Lenses
+
+---
+
+### Meadows — System Dynamics & Leverage Points
+
+**Orientation:** Systems produce their own behavior. If you want to understand why something is happening, don't look at the actors — look at the structure: the stocks, flows, feedback loops, and delays that create the dynamics you observe. Most interventions fail because they push on low-leverage points (adjusting parameters) when the system's behavior is driven by its structure (feedback loops, rules, goals, paradigms). The highest leverage is often counterintuitive.
+
+**Moves:**
+
+- Map the system: Identify the stocks (accumulations), flows (rates of change), and feedback loops (reinforcing and balancing)
+- Find the feedback loops: Which are reinforcing (amplifying change) and which are balancing (resisting change)? Which ones dominate?
+- Identify delays: Where does the system respond slowly? Delays cause oscillation and overshoot — they're where instability lives.
+- Locate the leverage points: Where would a small change in structure produce a large change in behavior? (Hint: it's usually not where you first look.)
+- Check system goals: What is the system optimizing for? (Often different from what it's supposed to optimize for.)
+
+**Signature Questions:**
+
+- What are the stocks and flows? What is accumulating, and what controls the rate?
+- Where are the feedback loops? Which are reinforcing and which are balancing?
+- Where are the delays? What dynamics do they create (oscillation, overshoot)?
+- What is the system's actual goal — not its stated goal, but the one its structure is optimizing for?
+- Where are the leverage points? Where would a small structural change produce the largest behavioral shift?
+- Are we pushing on a low-leverage point (adjusting a number) when we should be changing the rules, goals, or paradigm?
+- What would this system do if we left it alone? (Its default trajectory reveals its dominant loops.)
+
+**Failure Modes to Hunt:**
+
+- Event-level thinking: reacting to symptoms without seeing the systemic structure that produces them
+- Pushing on low-leverage points: spending effort adjusting parameters when the feedback structure is the problem
+- Ignoring delays: expecting immediate results from interventions in systems with long time constants
+- Fixing the symptom, worsening the system: interventions that suppress balancing feedback, allowing reinforcing loops to dominate
+- Goal displacement: the system has drifted to optimizing something other than its original purpose
+- Missing reinforcing loops: exponential growth or collapse that isn't visible until it's too late
+
+---
+
+### Simon — Bounded Rationality & Satisficing
+
+**Orientation:** Optimization is a mathematical fiction. Real decisions happen under bounded rationality — limited information, limited computation, limited time. The right question is not "what is optimal?" but "what is good enough, and can we find it with the resources we actually have?" Satisficing — seeking a solution that meets the threshold — is not a failure of rationality. It is often the only rational strategy when the cost of optimization exceeds the value of the improvement.
+
+**Moves:**
+
+- Assess computational tractability: Is the optimal solution even findable in the available time and with available information? If not, satisficing isn't a compromise — it's the correct strategy.
+- Define the aspiration level: What is "good enough"? Set an explicit threshold before searching, not after.
+- Decompose into near-independent sub-problems: Complex problems are usually nearly decomposable — find the natural joints.
+- Identify the attention bottleneck: What is actually scarce here — information, computation, time, or attention? Design the decision process around the real constraint.
+- Check for "looking under the lamppost": Is the analysis shaped by what data is conveniently available, rather than what data is actually relevant?
+
+**Signature Questions:**
+
+- Is optimization tractable here, or are we pretending it is? What is the actual computational cost of finding the best solution?
+- What is "good enough"? Can we define a clear aspiration level before we start?
+- Can this problem be decomposed into nearly independent sub-problems?
+- What is the binding constraint — information, time, compute, or attention?
+- Are we analyzing what's convenient to measure, or what actually matters?
+- When should we stop deliberating and act? What's the cost of continued analysis vs. the cost of a suboptimal choice?
+- Is this a case where more information would actually help, or would it just add noise?
+
+**Failure Modes to Hunt:**
+
+- Optimization theater: pursuing the optimal solution when satisficing would produce nearly the same result at a fraction of the cost
+- Analysis paralysis: the cost of continued analysis exceeding the value of improvement
+- Ignoring decomposability: treating a complex problem as monolithic when it has natural joints
+- Data availability bias: analyzing what's measurable instead of what's important
+- Aspiration-level drift: continuously raising the bar so "good enough" is never reached
+- Confusing information volume with decision quality
+
+---
+
+### Senge — Learning Organizations & System Archetypes
+
+**Orientation:** Organizations don't fail because of individual mistakes — they fail because of systemic structures that produce recurring patterns of behavior. These patterns — "system archetypes" — repeat across industries and contexts. If you can recognize the archetype, you can anticipate the dynamics before they play out. The deepest lever is the mental model: the assumptions and beliefs that keep the system locked in its current pattern.
+
+**Moves:**
+
+- Identify the system archetype: Is this "Fixes that Backfire"? "Shifting the Burden"? "Limits to Growth"? "Tragedy of the Commons"? "Success to the Successful"?
+- Find the mental model: What assumption or belief is keeping this system locked in its current pattern?
+- Distinguish the symptomatic solution from the fundamental solution: Is the current "fix" actually preventing the real problem from being addressed?
+- Map the learning disabilities: Where is the organization unable to learn from its own experience?
+- Check for delayed consequences: Is a current "success" creating conditions for future failure?
+
+**Signature Questions:**
+
+- What system archetype is operating here? What pattern keeps repeating?
+- What mental model is holding this pattern in place? What would have to change in how people think?
+- Is this a symptomatic fix or a fundamental solution? Is the quick fix making the real problem harder to solve?
+- Where are the learning disabilities? What is the organization systematically unable to see about itself?
+- What is this team/organization optimizing locally that is suboptimal globally?
+- If you showed the system its own behavior pattern over time, would it be surprised?
+- What would "double-loop learning" look like here — learning that changes the underlying assumptions, not just the actions?
+
+**Failure Modes to Hunt:**
+
+- "Fixes that Backfire": short-term solutions that create long-term dependency (workarounds that become permanent)
+- "Shifting the Burden": relying on symptomatic solutions until the capacity for fundamental solutions atrophies
+- "Limits to Growth": early success hitting a constraint that turns growth into stagnation or collapse
+- "Tragedy of the Commons": local optimization destroying a shared resource
+- "Success to the Successful": early advantage compounding into systemic inequality
+- Mental model lock-in: inability to question the assumptions driving the pattern
+- Single-loop learning: adjusting actions without examining the beliefs that produced them
+
+---
+
+## Decision Science Lenses
+
+---
+
+### Gigerenzer — Ecological Rationality & Fast-and-Frugal Heuristics
+
+**Orientation:** Heuristics are not biases — they are evolved tools adapted to specific environments. A simple heuristic that ignores information can outperform a complex optimization when the environment is uncertain, sample sizes are small, and the future differs from the past. The question is not "is this rational in the abstract?" but "does this heuristic fit this environment?" Less can literally be more: simpler models with fewer parameters predict better in uncertain worlds because they don't overfit.
+
+**Moves:**
+
+- Match the heuristic to the environment: Is this a situation with high uncertainty, small samples, and many cues? Then simple rules beat complex models (bias-variance tradeoff).
+- Apply the less-is-more principle: Would ignoring some information actually improve prediction? Does a fast-and-frugal tree outperform a regression?
+- Test ecological validity: Does the finding hold in the real-world environment, or only in the lab? What features of the lab (forced choices, artificial probabilities) might not transfer?
+- Ask whether the "bias" is an adaptation: Is the heuristic producing errors in the lab but success in the environment it evolved for?
+- Check the bias-variance tradeoff: Is the more complex model actually predicting better, or is it overfitting to noise?
+
+**Signature Questions:**
+
+- What is the structure of the environment? Is it stable and data-rich (favoring optimization) or uncertain and data-poor (favoring heuristics)?
+- Would a simpler decision rule produce equal or better outcomes here?
+- Is the "bias" actually an adaptation to the environment? Does it fail in the lab but work in the field?
+- What information is this heuristic ignoring? Is that a bug or a feature?
+- Does the complex model's superior fit on past data translate to superior prediction of future data?
+- What is the cost of using the complex model (time, data requirements, interpretability) vs. the simple one?
+- Is this a one-cue world (where a single variable dominates) or a compensatory world (where many variables matter equally)?
+
+**Failure Modes to Hunt:**
+
+- Complexity bias: assuming more variables, more data, and more sophisticated models always perform better
+- Lab-only rationality: declaring a behavior "irrational" based on lab studies that don't match real-world environmental structure
+- Overfitting: complex models that explain the past perfectly but predict the future poorly
+- Ignoring the cost of information: treating data collection and processing as free
+- Decontextualized bias claims: calling a heuristic an error without specifying what environment it's being evaluated in
+- Assuming more deliberation always helps: sometimes thinking more makes decisions worse (overthinking)
+
+---
+
+### Duke — Probabilistic Thinking & Decision Quality
+
+**Orientation:** Every decision is a bet on an uncertain future, and the quality of a decision is not determined by its outcome. Resulting — judging decisions by outcomes rather than process — is the cardinal error. Good decisions can produce bad outcomes, and bad decisions can produce good outcomes. The discipline is separating signal from noise, calibrating confidence honestly, and updating beliefs when evidence arrives rather than defending them.
+
+**Moves:**
+
+- Separate decision quality from outcome quality: Was this a good bet even if it didn't pay off? Was this a bad bet even though it worked?
+- Calibrate confidence: What probability do you actually assign to this? Not "I think" or "I feel" — what number? (Then check: are you historically right 70% of the time when you say 70%?)
+- Identify resulting: Is the evaluation of this decision contaminated by knowledge of the outcome?
+- Run the "10-10-10": How will you feel about this decision 10 minutes from now? 10 months? 10 years? (Surfaces time-horizon biases.)
+- Pre-commit to update criteria: Before seeing the results, define what evidence would make you change your mind.
+
+**Signature Questions:**
+
+- If this decision produced a bad outcome, would you still defend the process? (If not, the decision might be outcome-dependent, not process-sound.)
+- What probability do you assign to this? (Force a number — vague confidence enables self-deception.)
+- What would change your mind? If you can't answer this, you're not reasoning — you're defending a position.
+- Are you evaluating the decision or the outcome? What did you know at the time you made the choice?
+- What is the range of possible outcomes, and what is the expected value across all of them?
+- Are you in a situation where you can learn from feedback, or is the feedback too slow, noisy, or deceptive?
+
+**Failure Modes to Hunt:**
+
+- Resulting: judging a good bet as bad because it lost, or a bad bet as good because it won
+- Phantom confidence: expressing certainty without calibration (saying "definitely" when you mean "probably")
+- Motivated reasoning: updating beliefs toward what you want to be true rather than what the evidence says
+- Hindsight bias: "I knew it all along" contaminating the evaluation of past decisions
+- Binary thinking: treating uncertain situations as certainties ("this will work" vs. "this has a 70% chance of working")
+- Failure to update: treating beliefs as identity rather than probability estimates
+
+---
+
+### Bayes — Prior Updating & Evidence Strength
+
+**Orientation:** All reasoning under uncertainty is updating beliefs in light of evidence. You start with a prior (what you believed before), observe evidence, assess how likely that evidence would be under different hypotheses (the likelihood ratio), and arrive at a posterior (what you should now believe). The strength of evidence is not how surprising it is in absolute terms, but how much more likely it is under one hypothesis than another. Extraordinary claims require extraordinary evidence because they start with low priors.
+
+**Moves:**
+
+- Make the prior explicit: Before looking at the evidence, what did you already believe? What is the base rate?
+- Compute the likelihood ratio: How much more likely is this evidence under hypothesis A than hypothesis B? (This is the actual strength of the evidence.)
+- Update proportionally: Strong evidence (high likelihood ratio) warrants large updates. Weak evidence warrants small ones. No evidence warrants no update.
+- Check for base rate neglect: Is a low prior being swamped by a single vivid piece of evidence?
+- Ask about the counterfactual: Would this evidence also appear under the alternative hypothesis? If so, it's not very informative.
+
+**Signature Questions:**
+
+- What is the prior probability? Before this evidence, what was the base rate or prior belief?
+- What is the likelihood ratio? How much more likely is this evidence if hypothesis A is true vs. hypothesis B?
+- Is this evidence diagnostic — does it actually differentiate between hypotheses? Or would you see it regardless?
+- Are you updating enough? Are you anchored on the prior and ignoring strong evidence?
+- Are you updating too much? Is a single data point overwhelming a well-established prior?
+- What evidence would produce the largest update? What experiment would be most informative?
+- What is the posterior after updating? State your revised belief as a probability.
+
+**Failure Modes to Hunt:**
+
+- Base rate neglect: ignoring the prior and being overwhelmed by case-specific evidence
+- Non-diagnostic evidence: treating evidence as informative when it would appear under both hypotheses
+- Asymmetric updating: updating readily in one direction but resisting updates in the other
+- Failure to make priors explicit: reasoning from an unconscious prior that may be unreasonable
+- Confusion of absence of evidence with evidence of absence (when the evidence would be hard to detect either way)
+- Treating the posterior as a new prior without tracking cumulative uncertainty
+
+---
+
+## Information & Communication Lenses
+
+---
+
+### Tufte — Information Density & Visual Evidence
+
+**Orientation:** Every display of information is an argument — it asserts that certain patterns exist and matter. The quality of that argument depends on the data-ink ratio: how much of what you're showing is actual information vs. decoration, redundancy, or chartjunk. The goal is maximum information density with minimum noise. Respect the viewer's intelligence — people can process complex data if you present it honestly, with no distortion and no condescension.
+
+**Moves:**
+
+- Maximize the data-ink ratio: What fraction of the ink on this display represents actual data? Remove everything else.
+- Show the data: Before summarizing, simplifying, or aggregating, present the actual evidence. Summaries conceal variation.
+- Small multiples: When comparing across conditions, use the same display repeated with one variable changed. Direct, parallel comparison is the most powerful visual argument.
+- Enforce graphical integrity: Do the visual proportions match the numerical proportions? (Beware: truncated axes, area-coded values, 3D effects, and dual axes all distort.)
+- Layer and separate: Use different visual layers (color, position, text) to encode different dimensions without clutter.
+
+**Signature Questions:**
+
+- What is the data-ink ratio? How much of this display is actual information vs. decoration?
+- Can I see the actual data, or only summaries? What variation is the summary concealing?
+- Does the visual representation faithfully match the data? Do the visual proportions equal the numerical ones?
+- Could I replace this chart with a table and lose nothing? If so, the chart is adding confusion, not clarity.
+- What comparison is this display making? Is the comparison direct and parallel, or does it require the viewer to hold information in memory?
+- What is the lie factor? (Visual size of effect / actual size of effect — should be 1.0.)
+
+**Failure Modes to Hunt:**
+
+- Chartjunk: decoration, moiré patterns, 3D effects, and gratuitous design elements that obscure data
+- Low data-ink ratio: displays that are mostly frame, grid, and label with very little actual data
+- Truncated or dual axes that visually exaggerate small differences
+- Summary statistics hiding important variation (means without distributions)
+- Aggregation concealing Simpson's paradox or ecological fallacy
+- Design that condescends: oversimplified displays that underestimate the viewer's ability to process complex data
+
+---
+
+### Luhmann — Knowledge Networks & Emergent Connections
+
+**Orientation:** Knowledge is not a collection — it is a network. Individual ideas have value, but the real intellectual power emerges from the connections between them. Writing is thinking — you don't have ideas and then write them down; you discover ideas by writing them and connecting them. A well-structured knowledge system should surprise you: connections you didn't plan should emerge, producing insights that no single note contains.
+
+**Moves:**
+
+- Atomize: Break every idea down to its smallest self-contained unit. One idea, one note. If a note contains two ideas, split it.
+- Connect aggressively: Every new idea should be linked to existing ideas. The question is not "where does this go?" but "what does this connect to?"
+- Let structure emerge bottom-up: Don't impose top-down categories. Let the connections between atomic ideas reveal the structure.
+- Write to think: Don't wait until you understand something to write about it. Writing is the process of understanding.
+- Follow the surprises: When unexpected connections emerge between previously unrelated ideas, that's where the real insight lives.
+
+**Signature Questions:**
+
+- What does this connect to? What existing ideas does this new information link to?
+- Can this be broken down further? Is this one idea or several masquerading as one?
+- What is the structure that's emerging from the connections? What categories or clusters are forming that I didn't plan?
+- Am I filing or connecting? (Filing is storage; connecting is thinking.)
+- What surprises me? Where are the unexpected links between ideas from different domains?
+- What would happen if I juxtaposed these two seemingly unrelated ideas?
+
+**Failure Modes to Hunt:**
+
+- Collector's fallacy: accumulating information without connecting or processing it
+- Top-down categorization: imposing a filing system instead of letting structure emerge from connections
+- Isolated notes: ideas stored without links, invisible to future retrieval
+- Premature systematization: organizing before enough material exists for genuine structure to emerge
+- Confusing storage with understanding: believing that saving an idea is the same as integrating it
+- Symmetry of connections: every link should be meaningful — indiscriminate linking destroys signal
+
+---
+
+## Discovery & Innovation Lenses
+
+---
+
+### Johnson — Adjacent Possible & Innovation Through Recombination
+
+**Orientation:** Good ideas don't come from genius or epiphany — they come from environments and processes that make them possible. Innovation is recombination: connecting existing ideas, technologies, and capabilities in new configurations. The "adjacent possible" is the set of things that become achievable given what currently exists — and the best innovations expand the adjacent possible, opening doors to further innovations. Ideas need time to incubate and collide.
+
+**Moves:**
+
+- Map the adjacent possible: Given what currently exists (technology, knowledge, infrastructure), what new combinations are now feasible that weren't before?
+- Look for exaptation: What existing capability, built for one purpose, could be repurposed for a completely different use?
+- Create collision environments: Innovation happens when diverse ideas encounter each other. Increase the surface area for unexpected combinations.
+- Check for the "slow hunch": Is this idea fully formed, or is it a slow hunch that needs time and collision with other hunches to mature?
+- Trace the lineage: Every innovation has precursors. What existing ideas does this recombine?
+
+**Signature Questions:**
+
+- What is the adjacent possible right now? What has recently become feasible that wasn't before?
+- What existing technology or process, built for one purpose, could be repurposed here? (Exaptation)
+- What ideas from completely different domains could be combined with this one?
+- Is this a fully formed idea, or a slow hunch that needs more time and input to mature?
+- What precursors does this idea build on? What had to exist first for this to be possible?
+- Are we looking for innovation in isolation, or creating environments where ideas can collide?
+
+**Failure Modes to Hunt:**
+
+- Genius myth: attributing innovation to individual brilliance rather than environmental conditions
+- Ignoring the adjacent possible: attempting innovations that require capabilities that don't yet exist
+- Premature closure: forcing a slow hunch into a finished product before it's ready
+- Isolation: developing ideas in silos instead of exposing them to diverse inputs
+- Ignoring exaptation: only looking for purpose-built solutions when repurposed existing capabilities would work
+- Skipping the precursors: trying to leapfrog the adjacent possible
+
+---
+
+### Geertz — Thick Description & Interpretive Observation
+
+**Orientation:** Understanding is not achieved from the outside by measuring and classifying — it is achieved from the inside by interpreting what things mean to the people who do them. A "thin description" records what happened; a "thick description" captures what it meant. The difference between a twitch and a wink is not physical — it is interpretive. If you want to understand a system, a culture, or a practice, you must understand the webs of meaning that the participants are operating within.
+
+**Moves:**
+
+- Thick description: Don't just record what happened — describe what it meant to the participants. What was the significance, not just the sequence?
+- Interpret from the inside out: What do the actors think they're doing? What framework of meaning are they operating within?
+- Look for the symbolic: Actions carry meaning beyond their practical function. What does this practice/choice/ritual signify?
+- Resist premature generalization: Stay close to the specific case. Understand *this* situation deeply before claiming it represents a pattern.
+- Triangulate: Observe from multiple positions. The view from the participant, the observer, and the outsider will differ — the differences are informative.
+
+**Signature Questions:**
+
+- What does this mean to the people doing it? (Not what does it mean to us.)
+- What is the difference between the thin description (what happened) and the thick description (what it meant)?
+- What web of significance are these actors operating within? What framework of meaning makes their actions sensible?
+- What symbolic content does this action carry beyond its practical function?
+- Am I observing from the outside and imposing my framework, or understanding from the inside?
+- What would I miss about this if I only looked at the data and never talked to the people?
+
+**Failure Modes to Hunt:**
+
+- Thin description masquerading as understanding (recording behavior without interpreting meaning)
+- Imposing the observer's framework onto the observed (assuming your categories are their categories)
+- Premature generalization: jumping to universal claims from specific observations
+- Ignoring symbolic and cultural content in technical or organizational decisions
+- Quantifying what should be interpreted: turning meaning into metrics and losing the meaning
+- Treating the map (the analyst's model) as the territory (the participants' lived experience)
+
+---
+
+### Edison — Systematic Invention & Relentless Experimentation
+
+**Orientation:** Invention is not inspiration — it is systematic, disciplined experimentation at scale. Genius is one percent inspiration and ninety-nine percent perspiration, but the perspiration must be *organized* perspiration. Keep detailed notebooks. Run experiments in parallel. Set up your environment for rapid iteration. Kill failed approaches fast and move on. The goal is not to be right on the first try — it is to maximize the number of useful trials per unit of time. Invention is also a team sport: build a laboratory of diverse minds, not a solo workshop.
+
+**Moves:**
+
+- Systematic variation: Don't guess — systematically vary one parameter at a time across many experiments. The answer is in the data, not the theory.
+- Parallel experimentation: Run multiple approaches simultaneously. Don't wait for one to fail before starting the next.
+- Document everything: Detailed notebooks are not bureaucracy — they are how you capture serendipitous findings and avoid repeating failed experiments.
+- Build for rapid iteration: Design your environment (lab, workflow, tooling) to minimize the time between experiments.
+- Harvest adjacent discoveries: Many of the most valuable findings are not what you were looking for. Pay attention to unexpected results.
+
+**Signature Questions:**
+
+- How many experiments have we actually run? (If the answer is "we're still planning," something is wrong.)
+- What are we systematically varying? What's the experimental matrix?
+- What did the failed experiments teach us? (If nothing, we're not documenting well enough.)
+- Can we run these experiments in parallel instead of sequentially?
+- What unexpected result did we dismiss that might actually be the most important finding?
+- Is our environment set up for rapid iteration, or does each experiment require weeks of setup?
+- Who else should be in the room? What perspective are we missing?
+
+**Failure Modes to Hunt:**
+
+- Theory without experimentation: planning and debating when you should be testing
+- Sequential where parallel is possible: running experiments one at a time when many could run simultaneously
+- Failing to document: losing the learnings from failed experiments
+- Premature optimization: investing heavily in the first approach that shows promise instead of continuing to explore
+- Solo invention: working alone when diverse perspectives would accelerate discovery
+- Ignoring unexpected results: dismissing findings that don't match the hypothesis instead of investigating them
+- Confusing activity with progress: running many experiments without systematic variation
+
+---
+
 ## Domain Signals for Extended Lenses
 
 When no lenses are explicitly named, use these signals to auto-invoke extended lenses:
@@ -1377,6 +1947,24 @@ When no lenses are explicitly named, use these signals to auto-invoke extended l
 | Cryptographic implementation, auth protocols | Ptacek |
 | AI tooling, agentic workflows, LLM integration | Huntley + Willison |
 | Platform design, developer experience, APIs | Yegge |
+| Judgment, estimation, forecasting, planning fallacy | Kahneman |
+| Comparison, choice architecture, framing effects | Tversky |
+| Behavioral bias, cognitive error, decision hygiene | Kahneman + Tversky |
+| Unfamiliar problem, stuck, need problem-solving strategy | Pólya |
+| Pattern discovery, computational exploration, enumeration | Euler |
+| Problem needs right abstraction level, overly complex | Grothendieck |
+| Symmetry, conservation, invariance, algebraic structure | Noether |
+| System dynamics, feedback loops, unintended consequences | Meadows |
+| Decision under resource/time constraints, when to stop analyzing | Simon |
+| Organizational patterns, recurring failures, team dynamics | Senge |
+| Simple vs complex model, heuristic validity, ecological fit | Gigerenzer |
+| Decision quality, probability calibration, resulting | Duke |
+| Evidence evaluation, hypothesis updating, prior probability | Bayes |
+| Data visualization, information display, presentation design | Tufte |
+| Knowledge organization, note-taking, connecting ideas | Luhmann |
+| Innovation, invention, new product development | Johnson + Edison |
+| Understanding user/customer behavior, culture, meaning | Geertz |
+| Experimentation process, rapid iteration, parallel testing | Edison |
 
 ## Output Format
 
