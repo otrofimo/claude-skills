@@ -1,0 +1,8 @@
+{
+  "name": "picasso",
+  "version": "1.0.0",
+  "description": "Progressive code simplification through deliberate waves, inspired by Picasso's Bull lithograph series. Each wave removes a specific category of non-essential complexity. Every wave produces working code.",
+  "author": {
+    "name": "otrofimo"
+  }
+}
