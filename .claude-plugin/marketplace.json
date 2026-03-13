@@ -29,6 +29,14 @@
       "version": "2.0.0",
       "repository": "https://github.com/otrofimo/claude-skills",
       "license": "MIT"
+    },
+    {
+      "name": "cognitive-mesh",
+      "description": "BDI+OODA cognitive mesh protocol for structured problem-solving. Fuses Beliefs-Desires-Intentions with Observe-Orient-Decide-Act in iterative cycles that tighten until the problem is solved. Execution-focused, not analysis-focused.",
+      "source": "./skills/cognitive-mesh",
+      "version": "1.0.0",
+      "repository": "https://github.com/otrofimo/claude-skills",
+      "license": "MIT"
     }
   ]
 }
