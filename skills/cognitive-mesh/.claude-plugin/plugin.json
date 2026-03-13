@@ -1,0 +1,8 @@
+{
+  "name": "cognitive-mesh",
+  "version": "1.0.0",
+  "description": "BDI+OODA cognitive mesh protocol for structured problem-solving. Fuses Beliefs-Desires-Intentions with Observe-Orient-Decide-Act in iterative cycles that tighten until the problem is solved. Execution-focused, not analysis-focused.",
+  "author": {
+    "name": "otrofimo"
+  }
+}
