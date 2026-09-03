@@ -22,11 +22,11 @@ Applied to code: you cannot simplify what you do not fully understand *and prote
 
 | Wave | Name | Focus |
 |------|------|-------|
-| 1 | **Intensify** | Make it explicit — baseline tests, dependency map, center of balance, invariant ledger, focused tests for unprotected rules |
-| 2 | **Clean** | Remove local noise — dead code, dead branches, debug artifacts, tests that distinguish nothing |
-| 3 | **Consolidate** | One owner per rule — merge duplicate domain logic, inline wrappers, move behavior to the owner, split mixed responsibilities |
+| 1 | **Intensify** | Make it explicit — baseline tests, dependency map, center of balance, invariant ledger, existing codebase equivalents, focused tests for unprotected rules |
+| 2 | **Clean** | Remove local noise — dead code, dead branches, debug artifacts, AI-generated slop, tests that distinguish nothing |
+| 3 | **Consolidate** | One owner per rule — merge duplicate domain logic, route through helpers the codebase already has, inline wrappers, split mixed responsibilities |
 | 4 | **Clarify** | Straighten flow — guard clauses, simplified logic, one level of abstraction per method |
-| 5 | **Distill** | Challenge abstractions — including everything Wave 1 added. Did it earn its cost against the center of balance? |
+| 5 | **Distill** | Challenge abstractions — including everything Wave 1 added. Climb the reuse ladder: existing helper, stdlib, native platform feature, installed dependency |
 | 6 | **Essence** | Final reduction — every remaining line load-bearing, final diff reviewed for hidden behavior loss |
 
 ## Key Concepts
@@ -36,9 +36,15 @@ Applied to code: you cannot simplify what you do not fully understand *and prote
 - **Validated vs. observed** — only requirements, public contracts, or confirmed user intent are validated. Existing code and tests usually establish observed behavior, which is not automatically an invariant.
 - **Simplification is compression, not loss** — line count is evidence, not the objective. Revert a reduction that hides a rule, weakens safety, or increases navigation cost.
 
+## The Removal Audit
+
+Every wave after the first audits its own diff before it closes: list what was deleted, name the behavior each deleted line enforced, and point to where that behavior is enforced now. If nothing enforces it, the removal is not a simplification — it is reverted or the protection is replaced. This runs per wave, not once at the end.
+
 ## Verification Gates
 
-Every wave that changes code runs the relevant tests plus applicable lint or type checks before moving on. Wave 1 starts by recording a baseline — a failing baseline is reported, not refactored away. If a wave causes a failure, only that wave's changes are undone.
+Every wave that changes code runs the Removal Audit plus the relevant tests and applicable lint or type checks before moving on. Wave 1 starts by recording a baseline — a failing baseline is reported, not refactored away. New tests are proven by mutation: break the rule, watch the test fail, restore it. If a wave causes a failure, only that wave's changes are undone.
+
+Some things are never removed regardless of how decorative they look: validation at a trust boundary, error handling that prevents data loss, security and access-control checks, accessibility affordances. Performance is out of scope as a goal and in scope as a constraint — Picasso does not hunt for optimizations, but it fixes regressions it introduced. A wave with nothing to do says so rather than manufacturing work.
 
 ## Example
 

@@ -1,6 +1,6 @@
 {
   "name": "picasso",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Progressive code refinement through deliberate waves, inspired by Picasso's Bull lithograph series. Wave 1 makes behavior and invariants explicit; later waves remove non-essential complexity while preserving them. Every wave produces working code.",
   "author": {
     "name": "otrofimo"
