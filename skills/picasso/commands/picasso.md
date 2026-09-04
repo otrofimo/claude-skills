@@ -4,7 +4,7 @@ description: >
   series (1945-46). Wave 1 makes behavior, invariants, and responsibilities explicit. Later waves
   remove non-essential complexity while preserving those properties. Use when the user wants to
   simplify code methodically, strengthen it before refactoring, or understand what it is really doing.
-argument-hint: "[--wave=N] [--dry-run] [--resume] [--diff] <target>"
+argument-hint: "[--wave=N] [--dry-run] [--resume] [--diff] [--review] [--ledger] <target>"
 ---
 
 # Picasso Bull — Progressive Code Refinement
@@ -177,25 +177,27 @@ find in the wave that made it.
 
 **Focus:** Remove local noise while preserving the intent exposed in Wave 1.
 
-**Removes:**
+**Removes dead weight:**
 
 - Dead code and unreachable branches
 - Unused imports, variables, parameters
 - Commented-out code (it's in git history)
-- Redundant type assertions / unnecessary casts
 - No-op error handlers (catch and rethrow without modification)
 - Console.log / debug statements left behind
 - Unnecessary `else` after `return`
-- Redundant comments that restate the code
 - Duplicate mechanics when each copy implements the same rule and has the same reason to change
 - Tests that cannot distinguish a meaningful behavior from the remaining test suite
-- Comments a human working in this file would not write, or that break its local style
+
+**Removes slop** — the residue generated code leaves behind:
+
+- Comments that restate the code, that a human working in this file would not write, or that
+  break its local style
 - Defensive guards and `try`/`catch` on internal paths whose callers already validated the input
-- Casts that erase types (`any`, `unknown`, force-unwraps) added to quiet the type checker
+- Casts that erase types (`any`, `unknown`, force-unwraps, redundant assertions) added to quiet
+  the type checker
 - Backwards-compatibility residue with no live caller: shadow variables, pass-through re-exports,
   `// removed` markers
 - Imports placed inline where the language expects them grouped
-- Docstrings, annotations, or error handling added to code the change never touched
 
 Extract a shared implementation only when the copies represent the same knowledge. Similar syntax is
 not sufficient. If the change moves ownership between modules or files, defer it to Wave 3.
@@ -428,7 +430,10 @@ trigger.` If none: `No picasso: debt. Clean ledger.` Reads and reports only.
 ## Reviewer Pass (`--review`)
 
 The same pass must not both write and approve its own cleanup. `--review` is a second, read-only
-pass over a finished run: the diff, the Bill of Materials, and the wave outputs.
+pass over a finished run. Its inputs: the diff (the working tree against the last commit, or the
+commit range given as the target), the Bill of Materials, and the wave outputs. If the Bill of
+Materials is not in the conversation, rebuild the Invariant Ledger from the pre-change code before
+reading the diff — the audit needs a reference that was not written by the pass under review.
 
 Do not start by editing files. Check, in order:
 
