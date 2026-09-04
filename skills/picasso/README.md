@@ -16,6 +16,8 @@ Applied to code: you cannot simplify what you do not fully understand *and prote
 /picasso --dry-run <target>          # Show what each wave would do, don't apply
 /picasso --resume                    # Continue from last completed wave
 /picasso --diff                      # Show cumulative before/after at end
+/picasso --review <target>           # Reviewer-only pass over a finished run; edits nothing
+/picasso --ledger                    # Harvest every picasso: deferral marker into a ledger
 ```
 
 ## The Six Waves
@@ -45,6 +47,14 @@ Every wave after the first audits its own diff before it closes: list what was d
 Every wave that changes code runs the Removal Audit plus the relevant tests and applicable lint or type checks before moving on. Wave 1 starts by recording a baseline — a failing baseline is reported, not refactored away. New tests are proven by mutation: break the rule, watch the test fail, restore it. If a wave causes a failure, only that wave's changes are undone.
 
 Some things are never removed regardless of how decorative they look: validation at a trust boundary, error handling that prevents data loss, security and access-control checks, accessibility affordances. Performance is out of scope as a goal and in scope as a constraint — Picasso does not hunt for optimizations, but it fixes regressions it introduced. A wave with nothing to do says so rather than manufacturing work.
+
+## Tags, Deferrals, and Review
+
+Every change a wave makes carries a tag — `delete`, `reuse`, `stdlib`, `native`, `yagni`, `shrink`, `move`, `name`, `guard`, `test`, `skip`, `defer` — so a wave is gradeable at a glance and the Gallery Wall can tally what kind of work was done.
+
+Anything left in place with a known ceiling gets a `picasso: <ceiling>, <upgrade trigger>` comment. `/picasso --ledger` harvests every marker into a ledger and flags the ones with no trigger, so a deferral cannot quietly become permanent.
+
+`/picasso --review` is a read-only second pass over a finished run: it re-runs the Removal Audit independently, hunts for behavior drift and Wave 1 over-protection that survived, and returns a verdict with tagged follow-ups. The same pass never writes and approves its own cleanup.
 
 ## Example
 

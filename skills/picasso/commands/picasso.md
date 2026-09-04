@@ -30,6 +30,8 @@ Two concepts thread through every wave:
 /picasso --dry-run <target>          # Show what each wave would do, don't apply changes
 /picasso --resume                    # Continue from last completed wave
 /picasso --diff                      # Show cumulative before/after at end
+/picasso --review <target>           # Reviewer-only pass over a finished run; edits nothing
+/picasso --ledger                    # Harvest every picasso: deferral marker into a ledger
 ```
 
 ## Handling Arguments
@@ -40,7 +42,9 @@ Parse the `$ARGUMENTS` variable:
 2. **If `--wave=N` is present**: Run waves 1 through N, then stop.
 3. **If `--resume` is present**: Find the last completed wave's output in the conversation and continue from the next wave.
 4. **If `--diff` is present**: After the final wave, display a unified diff of the cumulative changes.
-5. **Everything else**: Treat as the target — a file path, function name, directory, or "recent" (files changed in last 3 commits).
+5. **If `--review` is present**: Run the Reviewer Pass below instead of the waves. Edit nothing.
+6. **If `--ledger` is present**: Run the Deferral Ledger below. Edit nothing.
+7. **Everything else**: Treat as the target — a file path, function name, directory, or "recent" (files changed in last 3 commits).
 
 If no target is provided, ask the user what code to simplify.
 
@@ -133,7 +137,7 @@ work, with paths. Empty if none.>
 - Low-value constraints: <tests coupled to implementation or unable to distinguish behavior>
 
 ### Intensification Changes
-1. [file:line] — <name, invariant, responsibility, or test made explicit> — <why>
+1. [file:line] — <tag> — <name, invariant, responsibility, or test made explicit> — <why>
 
 ### Metrics
 - Lines: <baseline> → <after Intensify>
@@ -320,7 +324,7 @@ Wave 1 uses the Bill of Materials above. For Waves 2-6, output this structure:
 
 ### Changes
 <Numbered list of specific changes with rationale>
-1. [file:line] — <what> — <why>
+1. [file:line] — <tag> — <what> — <why>
 
 ### Metrics
 - Lines: <before> → <after> (delta)
@@ -332,6 +336,26 @@ Wave 1 uses the Bill of Materials above. For Waves 2-6, output this structure:
 ### Verification
 - <test results or manual verification>
 ```
+
+Tag every change with one of:
+
+| Tag | Meaning |
+|---|---|
+| `delete` | Dead code, unused flexibility, speculative feature. Nothing replaces it. |
+| `reuse` | Routed through a helper the codebase already had. |
+| `stdlib` | Hand-rolled thing the standard library ships. Name the function. |
+| `native` | Code or dependency doing what the platform already does. Name the feature. |
+| `yagni` | Abstraction with one implementation, config nobody sets, layer with one caller. |
+| `shrink` | Same logic, fewer lines or clearer flow. |
+| `move` | Behavior relocated to the module or type that owns the rule. |
+| `name` | Rename that makes a concept or responsibility precise. |
+| `guard` | Invariant encoded as a type, assertion, or constrained constructor. |
+| `test` | Test added, replaced, or removed. |
+| `skip` | Found, deliberately not done. State the reason (Rule 13). |
+| `defer` | Left in place with a known ceiling. Marked in code (see Deferral Markers). |
+
+Tags make each wave gradeable at a glance: a Distill wave that is all `shrink` and no `yagni`
+has not done its job.
 
 Count each distinct invariant once. Do not count its guard, type, and test as three invariants.
 
@@ -359,15 +383,70 @@ Wave 5 (Distill):      <lines> lines | <abstractions> abstractions | <tests> tes
 Wave 6 (Essence):      <lines> lines | <abstractions> abstractions | <tests> tests | <invariants> encoded invariants
 
 Net size change: <start> → <end> lines (<signed count and percentage>)
-
-If no wave found anything to change, replace the Gallery Wall with a single line naming the target
-and saying it is already at its essence.
+By tag: delete <n> | reuse <n> | stdlib <n> | native <n> | yagni <n> | shrink <n> | move <n> | name <n> | guard <n> | test <n> | skip <n> | defer <n>
 
 ### What Was Learned
 - The center of balance: <what this code is really about>
 - Decorative complexity removed: <abstractions that turned out to be non-load-bearing>
 - The essential lines: <what remains and why each piece is load-bearing>
+
+### Deferred
+- [file:line] — picasso: <ceiling>, <upgrade trigger>
 ```
+
+If no wave found anything to change, replace the Gallery Wall with a single line naming the target
+and saying it is already at its essence.
+
+## Deferral Markers
+
+When a wave leaves something in place that it would otherwise cut, or keeps a simplification
+with a known ceiling (a global lock, an O(n²) scan, a naive heuristic), mark it in the code:
+
+```
+# picasso: <ceiling>, <upgrade trigger>
+# picasso: single global lock, per-account locks if write throughput matters
+```
+
+The comment prefix is the whole convention. It is one of the few comments Wave 1 permits: a
+constraint the code cannot state. A marker with no trigger is a deferral that will quietly become
+permanent. Write the trigger.
+
+### Deferral Ledger (`--ledger`)
+
+Grep the repo for the marker, skipping `node_modules`, `.git`, and build output:
+
+```
+grep -rnE '(#|//|--|<!--) ?picasso:' .
+```
+
+One row per hit, grouped by file: `<file>:<line> — <what was deferred>. ceiling: <limit>. upgrade:
+<trigger>.` Tag any marker that names no trigger `no-trigger`. End with `<N> markers, <M> with no
+trigger.` If none: `No picasso: debt. Clean ledger.` Reads and reports only.
+
+---
+
+## Reviewer Pass (`--review`)
+
+The same pass must not both write and approve its own cleanup. `--review` is a second, read-only
+pass over a finished run: the diff, the Bill of Materials, and the wave outputs.
+
+Do not start by editing files. Check, in order:
+
+1. **Removal Audit, independently.** Re-run it over the whole diff without reading the writer's
+   answers first. Every deleted line: what did it enforce, where is that enforced now?
+2. **Behavior drift.** Any change that altered behavior without the Changes list saying so, or a
+   weakened error, narrowed validation, or dropped edge case.
+3. **Wave 1 over-protection that survived Wave 5.** Guards on paths that cannot fail, tests
+   asserting Assumed behavior, comments restating clear names.
+4. **Leftovers.** Dead code, unused exports, duplicate logic, pass-through wrappers still present.
+5. **Protection gaps.** Preserved behavior with no test or type that fails if it breaks.
+6. **Rule 11.** Anything on the never-remove list that was removed.
+
+Output a verdict — **Accept**, **Accept with follow-ups**, or **Return** — with each follow-up as
+a tagged line: `[file:line] — <tag> — <what> — <why>`. Hand follow-ups back to a writer pass
+(`/picasso --resume` or a targeted wave). Do not fix them here.
+
+---
 
 ## Behavioral Rules
 
