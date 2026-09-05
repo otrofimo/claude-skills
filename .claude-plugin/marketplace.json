@@ -40,9 +40,9 @@
     },
     {
       "name": "picasso",
-      "description": "Progressive code simplification through deliberate waves, inspired by Picasso's Bull lithograph series. Each wave removes a specific category of non-essential complexity.",
+      "description": "Progressive code refinement through deliberate waves, inspired by Picasso's Bull lithograph series. Wave 1 makes behavior and invariants explicit; later waves remove non-essential complexity while preserving them.",
       "source": "./skills/picasso",
-      "version": "1.0.0",
+      "version": "1.3.0",
       "repository": "https://github.com/otrofimo/claude-skills",
       "license": "MIT"
     }

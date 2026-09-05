@@ -1,19 +1,21 @@
 ---
 description: >
-  Progressive code simplification through deliberate waves, inspired by Picasso's Bull lithograph
-  series (1945-46). Each wave removes a specific category of non-essential complexity while
-  preserving behavior. Wave 1 intensifies understanding before any cuts begin. Use when the user
-  wants to simplify code methodically, reduce complexity, or understand what their code is really doing.
-argument-hint: "[--wave=N] [--dry-run] [--resume] [--diff] <target>"
+  Progressive code refinement through deliberate waves, inspired by Picasso's Bull lithograph
+  series (1945-46). Wave 1 makes behavior, invariants, and responsibilities explicit. Later waves
+  remove non-essential complexity while preserving those properties. Use when the user wants to
+  simplify code methodically, strengthen it before refactoring, or understand what it is really doing.
+argument-hint: "[--wave=N] [--dry-run] [--resume] [--diff] [--review] [--ledger] <target>"
 ---
 
-# Picasso Bull — Progressive Code Simplification
+# Picasso Bull — Progressive Code Refinement
 
-You are running a **progressive simplification protocol**, not a one-shot cleanup.
+You are running a **progressive refinement protocol**, not a one-shot cleanup.
 
 The protocol is modeled on a specific cognitive sequence — the one Picasso used in his 1945-46 Bull lithograph series. The series does **not** go linearly from complex to simple. Plates I-III *increase* complexity — adding mass, muscular dissection, surface texture. Only after fully mapping the bull's anatomy, forces, and weight distribution does removal begin. Each cut is an *informed* cut.
 
-The principle: **you cannot simplify what you do not fully understand.** Simplification is compression, not loss.
+The principle: **you cannot simplify what you do not fully understand and protect.** Wave 1 may
+increase code and test size. Later waves must justify every removal against the behavior and
+invariants established there. Simplification is compression, not loss.
 
 Two concepts thread through every wave:
 
@@ -28,6 +30,8 @@ Two concepts thread through every wave:
 /picasso --dry-run <target>          # Show what each wave would do, don't apply changes
 /picasso --resume                    # Continue from last completed wave
 /picasso --diff                      # Show cumulative before/after at end
+/picasso --review <target>           # Reviewer-only pass over a finished run; edits nothing
+/picasso --ledger                    # Harvest every picasso: deferral marker into a ledger
 ```
 
 ## Handling Arguments
@@ -38,7 +42,9 @@ Parse the `$ARGUMENTS` variable:
 2. **If `--wave=N` is present**: Run waves 1 through N, then stop.
 3. **If `--resume` is present**: Find the last completed wave's output in the conversation and continue from the next wave.
 4. **If `--diff` is present**: After the final wave, display a unified diff of the cumulative changes.
-5. **Everything else**: Treat as the target — a file path, function name, directory, or "recent" (files changed in last 3 commits).
+5. **If `--review` is present**: Run the Reviewer Pass below instead of the waves. Edit nothing.
+6. **If `--ledger` is present**: Run the Deferral Ledger below. Edit nothing.
+7. **Everything else**: Treat as the target — a file path, function name, directory, or "recent" (files changed in last 3 commits).
 
 If no target is provided, ask the user what code to simplify.
 
@@ -46,20 +52,48 @@ If no target is provided, ask the user what code to simplify.
 
 ## Wave 1: Intensify — "The Butcher's Knowledge"
 
-**Focus:** Active, aggressive understanding. Not passive reading — *dissection*.
+**Focus:** Make behavior, invariants, and responsibilities explicit before making cuts.
 
 Picasso didn't sketch the bull once and start simplifying. In Plates II-III he **added** complexity — bulking up mass, adding muscular dissection lines, tracing the skeleton beneath the skin. He joked with the printers he was "cutting up the bull like a butcher." A butcher knows anatomy — knows where the joints are, where muscle attaches to bone, what separates from what. This is not random cutting. It is informed disassembly.
 
-**Moves:**
+Start by running the relevant tests without changing code. A failing baseline is evidence. Do not
+hide it with refactoring. Stop and report it unless the user explicitly accepts the known failure.
 
-- Read every line of the target code — not skimming, *dissecting*
-- Map ALL dependencies: who calls this, what this calls, what data flows through
-- Trace every execution path, including error paths and edge cases
-- Identify the **center of balance**: what is the core operation that everything else serves? Where does the structural weight rest?
-- Catalog every abstraction (class, module, function, layer) and record what work it does
-- For each abstraction, make an initial assessment: **load-bearing** (removing it would break behavior or lose essential clarity) or **decorative** (convention, historical accident, premature generalization)
-- Identify test coverage (or lack thereof)
-- Measure baseline metrics: line count, function/method count, abstraction count, file count
+**Understand:**
+
+- Read every line of the target and trace normal, boundary, and error paths
+- Map inbound callers, outbound dependencies, data transformations, and side effects
+- Search the wider codebase for helpers, utilities, types, and patterns that already do part of what the target does. Record them. Waves 3 and 5 decide whether to route through them
+- Read the conventions governing this code: CLAUDE.md at the repo root and in any ancestor directory of the target, plus any contributing guide
+- Identify the **center of balance**: the core operation that everything else serves
+- Catalog each abstraction and the reason it exists
+- Separate validated requirements from behavior that is only observed or assumed
+- Record baseline size, structure, test count, and available complexity or coverage metrics
+
+**Encode:**
+
+- Give domain concepts and responsibilities precise names
+- Encode validated invariants with the lightest suitable mechanism: types, value objects, guards, assertions, or constrained constructors
+- Extract methods when the name identifies a domain step, policy, side effect, or independent responsibility
+- Add comments only for rationale, constraints, or surprising decisions that code cannot state clearly
+- Add focused behavioral tests for important invariants, boundaries, and failure paths that lack protection
+
+Each new test must name the behavior or invariant that it protects, and must be shown to fail when
+that rule is broken: remove or invert the rule, watch the test fail, then restore it. A test that
+passes both ways protects nothing. Use table-driven or property tests only when the input space and
+existing tooling justify them. Do not add a test dependency without approval.
+
+Temporary expansion is expected. Do not extract methods only to make methods shorter. The Single
+Responsibility Principle concerns reasons to change, not line count.
+
+Treat tests as evidence, not unquestionable authority. Flag tests that only assert private structure,
+mock call sequences, or behavior contradicted by stronger requirements. Do not make production code
+more complex solely to satisfy such a test.
+
+"Validated" means supported by a requirement, public contract, documented project convention, or
+confirmed user intent. Existing code and tests usually establish "Observed," not "Validated." Do not
+encode every observed behavior as an invariant. Cite a convention only when you can quote the rule
+and the line that breaks it.
 
 **Output the Bill of Materials:**
 
@@ -82,61 +116,126 @@ Picasso didn't sketch the bull once and start simplifying. In Plates II-III he *
 |---|---|---|
 | <name> | <what it does> | Load-bearing / Decorative / Unclear |
 
+### Invariant Ledger
+| Invariant | Evidence | Confidence | Encoding |
+|---|---|---|---|
+| <rule that must remain true> | <code, test, caller, docs, convention> | Validated / Observed / Assumed | <type, guard, test, comment, none> |
+
 ### Load-Bearing vs. Decorative — Initial Assessment
 - **Load-bearing:** <list elements that carry structural meaning>
 - **Decorative:** <list elements that are convention, accident, or premature generalization>
 - **Unclear:** <list elements that need further waves to determine>
 
-### Test Coverage
-<Status. If no tests exist, flag this explicitly — the user must decide whether to proceed.>
+### Existing Equivalents
+<Helpers, utilities, types, or patterns elsewhere in the codebase that already do part of this
+work, with paths. Empty if none.>
 
-### Baseline Metrics
-- Lines: <count>
-- Functions/methods: <count>
-- Abstractions: <count>
-- Files: <count>
+### Test Assessment
+- Baseline result: <command and result>
+- Contract tests: <tests that protect meaningful behavior>
+- Coverage gaps: <important invariants, boundaries, and errors without tests>
+- Low-value constraints: <tests coupled to implementation or unable to distinguish behavior>
+
+### Intensification Changes
+1. [file:line] — <tag> — <name, invariant, responsibility, or test made explicit> — <why>
+
+### Metrics
+- Lines: <baseline> → <after Intensify>
+- Functions/methods: <baseline> → <after Intensify>
+- Abstractions: <baseline> → <after Intensify>
+- Tests: <baseline> → <after Intensify>
+- Encoded invariants: <baseline> → <after Intensify>
+- Files: <baseline> → <after Intensify>
 ```
 
-**No code changes are made in Wave 1.** But this wave produces an *opinionated* analysis — it is Picasso adding the dissection lines, making structure visible so subsequent waves can make informed cuts.
+Run relevant tests and applicable lint or type checks after intensification. Wave 1 ends with a
+working, better-protected design.
+
+---
+
+## The Removal Audit
+
+Every wave after Wave 1 removes or rewrites code. Before a wave closes, audit its own diff:
+
+1. List every line the wave deleted or replaced.
+2. For each, name the behavior or invariant it enforced. The Wave 1 Invariant Ledger is the
+   reference — a deleted line carrying a ledger row blocks the wave until step 3 answers it.
+3. Point to where that behavior is enforced now: the line, type, guard, or test that fails if it
+   breaks.
+4. If nothing enforces it, the removal is not a simplification. Restore it, or put the protection
+   back in another form before continuing.
+
+A line whose only job was enforcing a rule the ledger marks Assumed may go. Say so in the wave's
+Changes list rather than dropping it silently.
+
+Run this audit in every wave, not once at the end. A removal that loses behavior is cheapest to
+find in the wave that made it.
 
 ---
 
 ## Wave 2: Clean — "Remove the Background"
 
-**Focus:** Delete everything that contributes nothing. The easiest, safest removals. This is the background — it was never part of the bull.
+**Focus:** Remove local noise while preserving the intent exposed in Wave 1.
 
-**Removes:**
+**Removes dead weight:**
 
 - Dead code and unreachable branches
 - Unused imports, variables, parameters
 - Commented-out code (it's in git history)
-- Redundant type assertions / unnecessary casts
 - No-op error handlers (catch and rethrow without modification)
 - Console.log / debug statements left behind
 - Unnecessary `else` after `return`
-- Redundant comments that restate the code
+- Duplicate mechanics when each copy implements the same rule and has the same reason to change
+- Tests that cannot distinguish a meaningful behavior from the remaining test suite
 
-**Rule:** Nothing behavioral changes. Only removal of dead weight.
+**Removes slop** — the residue generated code leaves behind:
 
-**Verify:** Run tests if they exist. Confirm no functional change.
+- Comments that restate the code, that a human working in this file would not write, or that
+  break its local style
+- Defensive guards and `try`/`catch` on internal paths whose callers already validated the input
+- Casts that erase types (`any`, `unknown`, force-unwraps, redundant assertions) added to quiet
+  the type checker
+- Backwards-compatibility residue with no live caller: shadow variables, pass-through re-exports,
+  `// removed` markers
+- Imports placed inline where the language expects them grouped
+
+Extract a shared implementation only when the copies represent the same knowledge. Similar syntax is
+not sufficient. If the change moves ownership between modules or files, defer it to Wave 3.
+
+Before deleting a test, name the behavior it claims to protect. Identify the remaining test that
+would fail if that behavior broke. If no such test exists, keep or replace the protection.
+
+Judge each item against the file it lives in, not an abstract standard. Comment density or error
+handling that matches its neighbors is not noise, even where another file would not have it.
+
+A guard is only redundant when you have traced every caller and each one validates. Behavioral
+Rule 11 holds regardless: validation at a trust boundary, error handling that prevents data loss,
+security checks, and accessibility affordances stay.
+
+**Rule:** Remove contamination, not domain detail. Nothing behavioral changes.
+
+**Verify:** Run the Removal Audit, then relevant tests and applicable lint or type checks. Confirm no functional change.
 
 ---
 
 ## Wave 3: Consolidate — "Merge the Lines"
 
-**Focus:** Collapse duplication and unnecessary indirection.
+**Focus:** Give each rule one owner and each concept one canonical representation.
 
 **Moves:**
 
-- Merge duplicate logic into shared implementations
+- Merge duplicate domain logic into shared implementations
+- Route reimplemented logic through the existing codebase helper Wave 1 found, rather than keeping a local copy
 - Inline trivial wrapper functions (functions that just call another function)
 - Collapse single-use abstractions back to their call site
-- Replace verbose patterns with language idioms
 - Merge related but scattered state into cohesive structures
+- Move behavior to the module, class, or value object that owns the rule
+- Split components that have independent reasons to change
 
-**Rule:** Reduce the number of concepts the reader must hold in their head.
+**Rule:** Consolidate shared knowledge, not coincidental syntax. Reduce the number of places that must
+change when one business rule changes.
 
-**Verify:** Run tests. Confirm behavioral equivalence.
+**Verify:** Run the Removal Audit, then relevant tests and applicable lint or type checks. Confirm behavioral equivalence.
 
 ---
 
@@ -151,10 +250,13 @@ Picasso didn't sketch the bull once and start simplifying. In Plates II-III he *
 - Replace imperative accumulation with declarative transforms where clearer
 - Name magic numbers and obscure conditions
 - Reorder code to match the reader's mental model (setup → action → cleanup)
+- Normalize input once instead of making readers track several equivalent forms
+- Remove comments that became redundant after names and flow improved
 
-**Rule:** A reader should understand the flow without tracing through branching paths.
+**Rule:** Keep each method at one level of abstraction. A reader should understand the primary path
+without tracing every branch or helper.
 
-**Verify:** Run tests. Confirm behavioral equivalence.
+**Verify:** Run the Removal Audit, then relevant tests and applicable lint or type checks. Confirm behavioral equivalence.
 
 ---
 
@@ -167,16 +269,24 @@ In Plate VI, Picasso identified the invisible lines of force — where weight di
 **Moves:**
 
 - Return to the Wave 1 center of balance. Does each remaining abstraction serve it?
+- Revisit every method, type, comment, and test added during Intensify. Did it earn its cost? Wave 1
+  is instructed to add protection, which makes it the likeliest source of over-protection: guards on
+  paths that cannot fail, comments restating names that are now clear, tests asserting an Assumed
+  behavior as though it were validated
 - Ask of every class/module/function: "What if this didn't exist? What structural weight does it carry?"
 - Replace inheritance hierarchies with composition (if simpler)
 - Replace generic frameworks with specific solutions (if only one use case)
 - Replace configuration-driven behavior with direct code (if only one config exists)
 - Collapse unnecessary layers (controller → service → repository, when service is passthrough)
-- Use standard library functions instead of hand-rolled equivalents
+- Before keeping a hand-rolled implementation, take the first rung that covers it: an existing helper
+  in this codebase, the standard library, a native platform feature (a built-in input type over a
+  widget library, CSS over JS, a database constraint over application code), or a dependency already
+  installed. Never add a dependency to climb this list
+- Merge or remove characterization tests once stronger contract tests protect the same behavior
 
 **Rule:** An abstraction must be load-bearing — serving multiple concrete uses or genuinely clarifying intent. Potential future use doesn't count. Decorative complexity goes.
 
-**Verify:** Run tests. Confirm behavioral equivalence.
+**Verify:** Run the Removal Audit, then relevant tests and applicable lint or type checks. Confirm behavioral equivalence.
 
 ---
 
@@ -195,16 +305,18 @@ Picasso's final plate: approximately 12 lines. Remove any one and it stops being
 - Challenge file/module boundaries — would fewer files be simpler?
 - Apply the "bullness" test: if I removed this line/function/file, would the code stop being recognizably *this code*? If yes, it stays. If no, it goes.
 - Write a final plain-language description and compare to Wave 1's — is the code now as simple as the description?
+- Review the final diff for hidden behavior loss, weaker errors, or names that became less precise
 
-**Rule:** If removing a line would break something or lose clarity, it stays. Everything else goes.
+**Rule:** Line count is evidence, not the objective. If a reduction hides a rule, weakens safety, or
+increases navigation cost, revert it. Stop when another cut would remove behavior or useful clarity.
 
-**Verify:** Run tests. Final before/after comparison.
+**Verify:** Run the Removal Audit, then relevant tests and applicable lint or type checks. Complete the final comparison.
 
 ---
 
 ## Wave Execution Protocol
 
-For each wave (2-6), output in this structure:
+Wave 1 uses the Bill of Materials above. For Waves 2-6, output this structure:
 
 ```
 ## Wave N: <Name> — "<Subtitle>"
@@ -214,16 +326,40 @@ For each wave (2-6), output in this structure:
 
 ### Changes
 <Numbered list of specific changes with rationale>
-1. [file:line] — <what> — <why>
+1. [file:line] — <tag> — <what> — <why>
 
 ### Metrics
 - Lines: <before> → <after> (delta)
 - Functions/methods: <before> → <after>
 - Abstractions: <before> → <after>
+- Tests: <before> → <after>
+- Encoded invariants: <before> → <after>
 
 ### Verification
 - <test results or manual verification>
 ```
+
+Tag every change with one of:
+
+| Tag | Meaning |
+|---|---|
+| `delete` | Dead code, unused flexibility, speculative feature. Nothing replaces it. |
+| `reuse` | Routed through a helper the codebase already had. |
+| `stdlib` | Hand-rolled thing the standard library ships. Name the function. |
+| `native` | Code or dependency doing what the platform already does. Name the feature. |
+| `yagni` | Abstraction with one implementation, config nobody sets, layer with one caller. |
+| `shrink` | Same logic, fewer lines or clearer flow. |
+| `move` | Behavior relocated to the module or type that owns the rule. |
+| `name` | Rename that makes a concept or responsibility precise. |
+| `guard` | Invariant encoded as a type, assertion, or constrained constructor. |
+| `test` | Test added, replaced, or removed. |
+| `skip` | Found, deliberately not done. State the reason (Rule 13). |
+| `defer` | Left in place with a known ceiling. Marked in code (see Deferral Markers). |
+
+Tags make each wave gradeable at a glance: a Distill wave that is all `shrink` and no `yagni`
+has not done its job.
+
+Count each distinct invariant once. Do not count its guard, type, and test as three invariants.
 
 After applying each wave's changes, display the cumulative progress:
 
@@ -241,28 +377,95 @@ After the last wave completes, display the full journey:
 ```
 ## The Gallery Wall
 
-Wave 1 (Intensify):    <lines> lines | <abstractions> abstractions | <files> files
-Wave 2 (Clean):        <lines> lines | <abstractions> abstractions | <files> files  (<% change>)
-Wave 3 (Consolidate):  <lines> lines | <abstractions> abstractions | <files> files  (<% change>)
-Wave 4 (Clarify):      <lines> lines | <abstractions> abstractions | <files> files  (<% change>)
-Wave 5 (Distill):      <lines> lines | <abstractions> abstractions | <files> files  (<% change>)
-Wave 6 (Essence):      <lines> lines | <abstractions> abstractions | <files> files  (<% change>)
+Wave 1 (Intensify):    <lines> lines | <abstractions> abstractions | <tests> tests | <invariants> encoded invariants
+Wave 2 (Clean):        <lines> lines | <abstractions> abstractions | <tests> tests | <invariants> encoded invariants
+Wave 3 (Consolidate):  <lines> lines | <abstractions> abstractions | <tests> tests | <invariants> encoded invariants
+Wave 4 (Clarify):      <lines> lines | <abstractions> abstractions | <tests> tests | <invariants> encoded invariants
+Wave 5 (Distill):      <lines> lines | <abstractions> abstractions | <tests> tests | <invariants> encoded invariants
+Wave 6 (Essence):      <lines> lines | <abstractions> abstractions | <tests> tests | <invariants> encoded invariants
 
-Total reduction: <start> → <end> lines (<total % change>)
+Net size change: <start> → <end> lines (<signed count and percentage>)
+By tag: delete <n> | reuse <n> | stdlib <n> | native <n> | yagni <n> | shrink <n> | move <n> | name <n> | guard <n> | test <n> | skip <n> | defer <n>
 
 ### What Was Learned
 - The center of balance: <what this code is really about>
 - Decorative complexity removed: <abstractions that turned out to be non-load-bearing>
 - The essential lines: <what remains and why each piece is load-bearing>
+
+### Deferred
+- [file:line] — picasso: <ceiling>, <upgrade trigger>
 ```
+
+If no wave found anything to change, replace the Gallery Wall with a single line naming the target
+and saying it is already at its essence.
+
+## Deferral Markers
+
+When a wave leaves something in place that it would otherwise cut, or keeps a simplification
+with a known ceiling (a global lock, an O(n²) scan, a naive heuristic), mark it in the code:
+
+```
+# picasso: <ceiling>, <upgrade trigger>
+# picasso: single global lock, per-account locks if write throughput matters
+```
+
+The comment prefix is the whole convention. It is one of the few comments Wave 1 permits: a
+constraint the code cannot state. A marker with no trigger is a deferral that will quietly become
+permanent. Write the trigger.
+
+### Deferral Ledger (`--ledger`)
+
+Grep the repo for the marker, skipping `node_modules`, `.git`, and build output:
+
+```
+grep -rnE '(#|//|--|<!--) ?picasso:' .
+```
+
+One row per hit, grouped by file: `<file>:<line> — <what was deferred>. ceiling: <limit>. upgrade:
+<trigger>.` Tag any marker that names no trigger `no-trigger`. End with `<N> markers, <M> with no
+trigger.` If none: `No picasso: debt. Clean ledger.` Reads and reports only.
+
+---
+
+## Reviewer Pass (`--review`)
+
+The same pass must not both write and approve its own cleanup. `--review` is a second, read-only
+pass over a finished run. Its inputs: the diff (the working tree against the last commit, or the
+commit range given as the target), the Bill of Materials, and the wave outputs. If the Bill of
+Materials is not in the conversation, rebuild the Invariant Ledger from the pre-change code before
+reading the diff — the audit needs a reference that was not written by the pass under review.
+
+Do not start by editing files. Check, in order:
+
+1. **Removal Audit, independently.** Re-run it over the whole diff without reading the writer's
+   answers first. Every deleted line: what did it enforce, where is that enforced now?
+2. **Behavior drift.** Any change that altered behavior without the Changes list saying so, or a
+   weakened error, narrowed validation, or dropped edge case.
+3. **Wave 1 over-protection that survived Wave 5.** Guards on paths that cannot fail, tests
+   asserting Assumed behavior, comments restating clear names.
+4. **Leftovers.** Dead code, unused exports, duplicate logic, pass-through wrappers still present.
+5. **Protection gaps.** Preserved behavior with no test or type that fails if it breaks.
+6. **Rule 11.** Anything on the never-remove list that was removed.
+
+Output a verdict — **Accept**, **Accept with follow-ups**, or **Return** — with each follow-up as
+a tagged line: `[file:line] — <tag> — <what> — <why>`. Hand follow-ups back to a writer pass
+(`/picasso --resume` or a targeted wave). Do not fix them here.
+
+---
 
 ## Behavioral Rules
 
-1. **Wave 1 must complete before any code changes.** Understanding before action. The butcher's knowledge comes first.
-2. **Every wave must preserve behavior.** Each intermediate state is a complete, working bull. Run tests after every wave. If tests fail, revert the wave and report what happened.
-3. **If no tests exist**, Wave 1 must flag this explicitly. Ask the user: proceed without tests (risky), or stop and write tests first?
-4. **The user can stop at any wave.** If `--wave=N` was specified, stop after wave N. The code at any wave is valid, simplified code.
-5. **Never combine waves.** Each wave has a specific lens. Mixing them produces unfocused changes that are harder to review and harder to revert.
-6. **Track metrics cumulatively.** The journey matters as much as the destination.
-7. **In `--dry-run` mode**, perform all analysis but make no file changes. Report what each wave *would* do, with specific locations and rationale.
-8. **Simplification is compression, not loss.** If something feels *lost* after a wave — if the code became harder to understand or less capable — the wrong thing was removed. Revert and reconsider.
+1. **Establish a baseline before changing code.** Run the smallest relevant test set and record existing failures.
+2. **Wave 1 may expand the code.** It must make validated behavior safer and easier to understand. Do not encode assumptions as requirements.
+3. **Strengthen tests selectively.** Use the existing test framework. Prefer public behavior, invariants, boundaries, and errors. Avoid private-method tests and mock-only assertions. Do not pursue coverage percentage as an objective.
+4. **If no usable test harness exists**, ask whether to add one or proceed with explicit risk. Do not introduce a new framework without approval.
+5. **Every changed wave must verify its work.** Run the Removal Audit, relevant tests, and applicable static checks. If a wave causes a failure, undo only that wave's changes. Preserve all pre-existing and unrelated user changes.
+6. **The user can stop at any wave.** If `--wave=N` was specified, stop after Wave N. Each completed wave must leave working code.
+7. **Never combine waves.** Each wave has a separate review lens and must remain easy to revert.
+8. **Track metrics cumulatively, but do not optimize one metric alone.** A shorter implementation can still be worse.
+9. **In `--dry-run` mode**, perform all analysis but make no file changes. Report proposed invariant, test, and code changes with specific locations.
+10. **Simplification is compression, not loss.** Revert a reduction that hides intent, removes protection, or makes the code harder to change safely.
+11. **Never remove**, however decorative it looks: validation at a trust boundary, error handling that prevents data loss, a security or access-control check, or an accessibility affordance. If one of these seems unnecessary, say so and leave it in place.
+12. **A wave with nothing to do reports nothing to do.** Say so and move to the next wave. Never manufacture changes to justify a wave — a target that arrives already lean should leave already lean.
+13. **Dedup and skip explicitly.** Carry findings forward across waves and collapse those pointing at the same line or mechanism. Skip any change that would alter intended behavior, reach well outside the target, or that you judge a false positive — record the skip and its reason in the wave's Changes list rather than arguing with it.
+14. **Performance is out of scope as a goal, in scope as a constraint.** Do not hunt for optimizations. Do fix a regression this refinement introduced: repeated I/O where there was one call, independent work made sequential, work moved onto a hot path, or a long-lived object built from a closure that now holds its whole enclosing scope alive.
