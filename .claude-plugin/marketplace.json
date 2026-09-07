@@ -45,6 +45,15 @@
       "version": "1.3.0",
       "repository": "https://github.com/otrofimo/claude-skills",
       "license": "MIT"
+    },
+    {
+      "name": "rails-pbt",
+      "description": "Property-based testing for Ruby on Rails with the pbt gem. Finds money, state-machine, idempotency and serializer logic, writes a property catalog for human review, then generates plain RSpec property specs from eight recipes and triages the failures.",
+      "source": "./skills/rails-pbt",
+      "version": "0.1.0",
+      "repository": "https://github.com/otrofimo/claude-skills",
+      "license": "MIT",
+      "keywords": ["rails", "ruby", "testing", "property-based-testing", "pbt", "rspec"]
     }
   ]
 }
