@@ -1,0 +1,23 @@
+{
+  "skill_name": "rails-pbt",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We have a Rails app with an Account model, a LedgerEntry model (enum state: pending/approved/settled/failed, with approve!/settle!/fail! methods), and an Account#balance_cents that sums settled entries. Add property-based tests for the ledger.",
+      "expected_output": "Reads the models first. Produces spec/properties/CATALOG.md with a ranked table (state machine and balance conservation at the top), a 'Not tested' section, and 'Assumptions to confirm' (e.g. whether balances may go negative). STOPS after the catalog and asks for confirmation. Does not write spec files yet.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "The catalog looks right. Go ahead and generate the property specs.",
+      "expected_output": "Adds gem 'pbt' to the test group, copies assets/pbt_rails.rb to spec/support/ and assets/pbt_rails_spec.rb to spec/properties/ with SMOKE_MODEL set, runs the self-check, then writes one spec per target starting with R1 (validation round-trip) and R2 (transition table) or R3 (balance oracle). Every DB write is inside PbtRails.isolated; no rand/Time.now inside property blocks; no bare rescue; rejections asserted with a named error class; sequences max: 20.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Two of the property specs are failing. One says 'Refund exceeds charges' and the other shrunk to counterexample [:settle] with 'pending --settle should have been rejected'. What do I do?",
+      "expected_output": "Triages in the documented order. The first is most likely a generator wider than the domain (refund generated before/above charges): narrows the generator by constructing refund <= charge, not by rescuing. The second has a small counterexample and a still-true property sentence: classifies it as a real bug, leaves the spec failing, records counterexample and seed in CATALOG.md with status 'FAILING — bug', and does not weaken the property.",
+      "files": []
+    }
+  ]
+}

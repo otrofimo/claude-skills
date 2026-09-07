@@ -11,6 +11,7 @@ A collection of skills for [Claude Code](https://docs.anthropic.com/en/docs/clau
 | [Auto-Archive](skills/auto-archive/) | `/archive` | Auto-archive sessions at 60% context window with keyword-indexed summaries for LLM discoverability. |
 | [Cognitive Mesh](skills/cognitive-mesh/) | `/mesh` | BDI+OODA cognitive mesh for structured problem-solving. Beliefs-Desires-Intentions manage internal state, Observe-Orient-Decide-Act drive execution. The mesh tightens each cycle until the problem is solved. Execution, not analysis. |
 | [Picasso Bull](skills/picasso/) | `/picasso` | Progressive code refinement through deliberate waves, inspired by Picasso's Bull lithograph series. Wave 1 makes behavior and invariants explicit; later waves remove non-essential complexity while preserving them. |
+| [Rails PBT](skills/rails-pbt/) | `/rails-pbt` | Property-based tests for Rails with the `pbt` gem. Ranks targets by blast radius, writes a property catalog for human review, then generates plain RSpec property specs from eight recipes and triages the failures. |
 
 ## Installation
 
@@ -26,6 +27,7 @@ A collection of skills for [Claude Code](https://docs.anthropic.com/en/docs/clau
 /plugin install auto-archive@claude-skills
 /plugin install cognitive-mesh@claude-skills
 /plugin install picasso@claude-skills
+/plugin install rails-pbt@claude-skills
 ```
 
 ### Uninstalling
@@ -37,6 +39,7 @@ A collection of skills for [Claude Code](https://docs.anthropic.com/en/docs/clau
 /plugin uninstall auto-archive@claude-skills
 /plugin uninstall cognitive-mesh@claude-skills
 /plugin uninstall picasso@claude-skills
+/plugin uninstall rails-pbt@claude-skills
 
 # Remove the marketplace (optional)
 /plugin marketplace remove otrofimo/claude-skills
@@ -53,6 +56,7 @@ cp -r claude-skills/skills/interrogation-protocol ~/.claude/skills/
 cp -r claude-skills/skills/auto-archive ~/.claude/skills/
 cp -r claude-skills/skills/cognitive-mesh ~/.claude/skills/
 cp -r claude-skills/skills/picasso ~/.claude/skills/
+cp -r claude-skills/skills/rails-pbt ~/.claude/skills/
 ```
 
 ## License

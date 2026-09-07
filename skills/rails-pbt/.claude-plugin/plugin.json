@@ -1,0 +1,9 @@
+{
+  "name": "rails-pbt",
+  "version": "0.1.0",
+  "description": "Property-based testing for Rails with the pbt gem: discover high-blast-radius logic, write a reviewed property catalog, then generate RSpec property specs from eight recipes and triage the first failures.",
+  "author": {
+    "name": "otrofimo"
+  },
+  "skills": ["./"]
+}
