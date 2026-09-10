@@ -15,6 +15,15 @@
       "license": "MIT"
     },
     {
+      "name": "council-grill",
+      "description": "Grill a plan by interrogating a council of domain experts instead of the user. An interrogator asks the whole frontier of the decision tree each round, the council answers and pushes back, and the loop runs until every decision is settled and a spec falls out. Runs the council on the Codex MCP where available, otherwise two Fable-class agents taking turns.",
+      "source": "./skills/council-grill",
+      "version": "1.0.0",
+      "repository": "https://github.com/otrofimo/claude-skills",
+      "license": "MIT",
+      "keywords": ["council", "grill", "spec", "planning", "interrogation", "codex", "multi-model"]
+    },
+    {
       "name": "interrogation-protocol",
       "description": "Cognitive lens interrogation protocols. Named thinkers run as operational methods — not persona simulations. Each lens applies specific moves, questions, and failure-mode hunts to any problem.",
       "source": "./skills/interrogation-protocol",

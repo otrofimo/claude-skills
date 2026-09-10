@@ -1,0 +1,8 @@
+{
+  "name": "council-grill",
+  "version": "1.0.0",
+  "description": "Grill a plan by interrogating a council of domain experts instead of the user. Runs the council on the Codex MCP where available, otherwise two Fable-class agents taking turns asking and answering, until every decision is settled and a spec falls out.",
+  "author": {
+    "name": "otrofimo"
+  }
+}
